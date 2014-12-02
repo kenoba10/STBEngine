@@ -1,10 +1,7 @@
 using System;
-using System.Drawing;
 
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
-
-using STBEngine.Core;
 
 namespace STBEngine.Rendering
 {
@@ -15,6 +12,9 @@ namespace STBEngine.Rendering
 		public void Initialize()
 		{
 
+			InitializeOpenGL();
+			SetClearColor(Color4.Black);
+
 		}
 
 		public void Update()
@@ -24,6 +24,38 @@ namespace STBEngine.Rendering
 
 		public void Terminate()
 		{
+
+		}
+
+		public void ClearScreen()
+		{
+
+			GL.Clear(ClearBufferMask.ColorBufferBit);
+
+		}
+
+		public void ResizeScreen(uint width, uint height)
+		{
+
+			GL.Viewport(0, 0, (int) width, (int) height);
+
+		}
+
+		public void InitializeOpenGL()
+		{
+
+			GL.Enable(EnableCap.CullFace);
+			GL.Enable(EnableCap.FramebufferSrgb);
+
+			GL.FrontFace(FrontFaceDirection.Cw);
+			GL.CullFace(CullFaceMode.Back);
+
+		}
+
+		public void SetClearColor(Color4 color)
+		{
+
+			GL.ClearColor(color);
 
 		}
 

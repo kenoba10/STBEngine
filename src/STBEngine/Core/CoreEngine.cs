@@ -63,6 +63,11 @@ namespace STBEngine.Core
 
 		}
 
+		public void Render()
+		{
+
+		}
+
 		public void Terminate()
 		{
 
@@ -73,7 +78,7 @@ namespace STBEngine.Core
 
 		}
 
-		public void Run(IGame game, uint updates)
+		public void Run(IGame game, uint ups, uint fps)
 		{
 
 			this.game = game;
@@ -81,7 +86,7 @@ namespace STBEngine.Core
 			using(GameWindow window = new Window(game.Title))
 			{
 
-				window.Run(updates);
+				window.Run(ups, fps);
 
 			}
 

@@ -1,7 +1,5 @@
 using System;
 
-using STBEngine.Rendering;
-
 namespace STBEngine.Core
 {
 

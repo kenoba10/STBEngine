@@ -40,12 +40,11 @@ namespace STBEngine.Core
 
 			base.OnRenderFrame(e);
 
-		}
+			CoreEngine.Instance.RenderingEngine.ClearScreen();
 
-		protected override void OnResize(EventArgs e)
-		{
+			CoreEngine.Instance.Render();
 
-			base.OnResize(e);
+			SwapBuffers();
 
 		}
 
@@ -55,6 +54,15 @@ namespace STBEngine.Core
 			base.OnUnload(e);
 
 			CoreEngine.Instance.Terminate();
+
+		}
+
+		protected override void OnResize(EventArgs e)
+		{
+
+			base.OnResize(e);
+
+			CoreEngine.Instance.RenderingEngine.ResizeScreen((uint) Width, (uint) Height);
 
 		}
 
