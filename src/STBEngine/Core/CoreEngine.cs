@@ -78,6 +78,13 @@ namespace STBEngine.Core
 		public void Terminate()
 		{
 
+			for(uint i = 0; i < entities.Count; i++)
+			{
+
+				RemoveEntity(entities[0]);
+
+			}
+
 			game.Terminate();
 
 			physicsEngine.Terminate();
@@ -102,6 +109,8 @@ namespace STBEngine.Core
 		public void AddEntity(Entity entity)
 		{
 
+			entity.Initialize();
+
 			entities.Add(entity);
 
 		}
@@ -110,6 +119,8 @@ namespace STBEngine.Core
 		{
 
 			entities.Remove(entity);
+
+			entity.Terminate();
 
 		}
 

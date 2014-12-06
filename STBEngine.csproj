@@ -62,5 +62,6 @@
     <Compile Include="src\STBEngine\Rendering\Mesh.cs" />
     <Compile Include="src\STBEngine\Rendering\Shader.cs" />
     <Compile Include="src\STBEngine\Utilities\IOUtils.cs" />
+    <Compile Include="src\STBEngine\Core\Component.cs" />
   </ItemGroup>
 </Project>
