@@ -3,6 +3,8 @@ using System;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 
+using STBEngine.Core;
+
 namespace STBEngine.Rendering
 {
 
@@ -15,6 +17,8 @@ namespace STBEngine.Rendering
 			InitializeOpenGL();
 			SetClearColor(Color4.Black);
 
+			Console.WriteLine("OpenGL Version: " + GetOpenGLVersion());
+
 		}
 
 		public void Update()
@@ -24,6 +28,17 @@ namespace STBEngine.Rendering
 
 		public void Terminate()
 		{
+
+		}
+
+		public void Render(Entity entity)
+		{
+
+			entity.Shader.Bind();
+
+			entity.Mesh.Draw();
+
+			entity.Shader.UnBind();
 
 		}
 
@@ -46,9 +61,16 @@ namespace STBEngine.Rendering
 
 			GL.Enable(EnableCap.CullFace);
 			GL.Enable(EnableCap.FramebufferSrgb);
-
+			
 			GL.FrontFace(FrontFaceDirection.Cw);
 			GL.CullFace(CullFaceMode.Back);
+
+		}
+
+		public string GetOpenGLVersion()
+		{
+
+			return GL.GetInteger(GetPName.MajorVersion) + "." + GL.GetInteger(GetPName.MinorVersion);
 
 		}
 

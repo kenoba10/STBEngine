@@ -66,6 +66,13 @@ namespace STBEngine.Core
 		public void Render()
 		{
 
+			foreach(Entity entity in entities)
+			{
+
+				renderingEngine.Render(entity);
+
+			}
+
 		}
 
 		public void Terminate()

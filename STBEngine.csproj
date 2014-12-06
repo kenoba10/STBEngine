@@ -39,6 +39,7 @@
     <Folder Include="src\STBEngine\Rendering\" />
     <Folder Include="src\STBEngine\Physics\" />
     <Folder Include="src\STBEngine\Core\Event\" />
+    <Folder Include="src\STBEngine\Utilities\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="OpenTK">
@@ -56,5 +57,10 @@
     <Compile Include="src\STBEngine\Core\Event\STBEventArgs.cs" />
     <Compile Include="src\STBEngine\Core\Event\STBEventManager.cs" />
     <Compile Include="src\STBEngine\Core\IGame.cs" />
+    <Compile Include="src\STBEngine\Rendering\Vertex.cs" />
+    <Compile Include="src\STBEngine\Rendering\Index.cs" />
+    <Compile Include="src\STBEngine\Rendering\Mesh.cs" />
+    <Compile Include="src\STBEngine\Rendering\Shader.cs" />
+    <Compile Include="src\STBEngine\Utilities\IOUtils.cs" />
   </ItemGroup>
 </Project>
