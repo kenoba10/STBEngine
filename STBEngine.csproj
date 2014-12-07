@@ -63,5 +63,6 @@
     <Compile Include="src\STBEngine\Rendering\Shader.cs" />
     <Compile Include="src\STBEngine\Utilities\IOUtils.cs" />
     <Compile Include="src\STBEngine\Core\Component.cs" />
+    <Compile Include="src\STBEngine\Core\Transformation.cs" />
   </ItemGroup>
 </Project>

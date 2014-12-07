@@ -11,12 +11,14 @@ namespace STBEngine.Core
 
 		private List<Component> components;
 
+		private Transformation transformation;
 		private Mesh mesh;
 		private Shader shader;
 
 		public Entity()
 		{
 
+			transformation = new Transformation();
 			mesh = new Mesh();
 			shader = new Shader();
 
@@ -31,6 +33,12 @@ namespace STBEngine.Core
 
 		public void Update()
 		{
+
+			shader.Bind();
+
+			shader.SetUniform("transformation", transformation.GetTransformation());
+
+			shader.UnBind();
 
 			foreach(Component component in components)
 			{
@@ -73,6 +81,18 @@ namespace STBEngine.Core
 			components.Remove(component);
 
 			component.Terminate();
+
+		}
+
+		public Transformation Transformation
+		{
+
+			get
+			{
+
+				return transformation;
+
+			}
 
 		}
 
