@@ -1,12 +1,12 @@
 using System;
 
-namespace STBEngine.Core
+namespace STBEngine.Core.Components
 {
 
 	public abstract class Component
 	{
 
-		private Entity parent;
+		protected Entity parent;
 
 		public virtual void Initialize()
 		{

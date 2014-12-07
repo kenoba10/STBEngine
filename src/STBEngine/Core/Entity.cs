@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 
+using STBEngine.Core.Components;
 using STBEngine.Rendering;
 
 namespace STBEngine.Core
@@ -36,6 +37,7 @@ namespace STBEngine.Core
 
 			shader.Bind();
 
+			shader.SetUniform("projection", CoreEngine.Instance.RenderingEngine.Camera.Projection);
 			shader.SetUniform("transformation", transformation.GetTransformation());
 
 			shader.UnBind();
