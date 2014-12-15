@@ -74,10 +74,12 @@ namespace STBEngine.Rendering
 
 			GL.Enable(EnableCap.CullFace);
 			GL.Enable(EnableCap.DepthTest);
-			GL.Enable(EnableCap.FramebufferSrgb);
+			GL.Enable(EnableCap.DepthClamp);
 			
 			GL.FrontFace(FrontFaceDirection.Cw);
 			GL.CullFace(CullFaceMode.Back);
+
+			GL.DepthFunc(DepthFunction.Less);
 
 		}
 

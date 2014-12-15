@@ -1,5 +1,6 @@
 using System;
 
+using OpenTK;
 using OpenTK.Input;
 
 namespace STBEngine.Core
@@ -7,6 +8,8 @@ namespace STBEngine.Core
 
 	public static class Input
 	{
+
+		private static Window window;
 
 		private static KeyboardState lastKeyboardState;
 		private static KeyboardState thisKeyboardState;
@@ -56,8 +59,30 @@ namespace STBEngine.Core
 
 		}
 
-		public static void Update()
+		public static Vector2 GetMousePosition()
 		{
+			return new Vector2(thisMouseState.X - lastMouseState.X, thisMouseState.Y - lastMouseState.Y);
+
+		}
+
+		public static void SetMousePosition()
+		{
+
+			Mouse.SetPosition(window.X + 256, window.Y + 256);
+
+		}
+
+		public static void LockMouse(bool lockMouse)
+		{
+
+			window.CursorVisible = !lockMouse;
+
+		}
+
+		public static void Update(Window window)
+		{
+
+			Input.window = window;
 			
 			lastKeyboardState = thisKeyboardState;
 			thisKeyboardState = Keyboard.GetState();

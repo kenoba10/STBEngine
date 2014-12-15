@@ -22,7 +22,7 @@ namespace STBEngine.Core.Components
 
 			base.Update();
 
-			projection =  Matrix4.CreateTranslation(-parent.Transformation.Position) * Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(fov), width / height, zNear, zFar);
+			projection =  Matrix4.CreateTranslation(-parent.Transformation.Position) * Matrix4.CreateFromQuaternion(parent.Transformation.Rotation) * Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(fov), width / height, zNear, zFar);
 
 		}
 

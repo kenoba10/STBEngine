@@ -29,7 +29,7 @@ namespace STBEngine.Core
 
 			base.OnUpdateFrame(e);
 
-			Input.Update();
+			Input.Update(this);
 
 			CoreEngine.Instance.Update();
 

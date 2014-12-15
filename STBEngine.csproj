@@ -3,8 +3,6 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProductVersion>12.0.0</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{63CE62F0-D42F-4C7E-AC1A-919230478570}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>STBEngine</RootNamespace>
@@ -41,12 +39,14 @@
     <Folder Include="src\STBEngine\Core\Event\" />
     <Folder Include="src\STBEngine\Utilities\" />
     <Folder Include="src\STBEngine\Core\Components\" />
+    <Folder Include="res\" />
+    <Folder Include="res\shaders\" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="System.Drawing" />
     <Reference Include="OpenTK">
       <HintPath>lib\OpenTK.dll</HintPath>
     </Reference>
-    <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="src\STBEngine\Core\CoreEngine.cs" />
@@ -69,4 +69,17 @@
     <Compile Include="src\STBEngine\Core\Components\CameraPerspective.cs" />
     <Compile Include="src\STBEngine\Core\Components\CameraOrthographic.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="res\shaders\basicFS.glsl" />
+    <EmbeddedResource Include="res\shaders\basicVS.glsl" />
+  </ItemGroup>
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties>
+        <Policies>
+          <DotNetNamingPolicy DirectoryNamespaceAssociation="Hierarchical" ResourceNamePolicy="FileFormatDefault" />
+        </Policies>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
 </Project>

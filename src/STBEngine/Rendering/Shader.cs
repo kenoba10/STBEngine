@@ -11,6 +11,9 @@ namespace STBEngine.Rendering
 	public class Shader
 	{
 
+		public static readonly string BASIC_VERTEX_SHADER = IOUtils.ReadFile("STBEngine.res.shaders.basicVS.glsl", false);
+		public static readonly string BASIC_FRAGMENT_SHADER = IOUtils.ReadFile("STBEngine.res.shaders.basicFS.glsl", false);
+
 		private int program;
 
 		public Shader()
@@ -20,7 +23,7 @@ namespace STBEngine.Rendering
 
 		}
 
-		public void AddVertexShader(string path)
+		public void AddVertexShader(string source)
 		{
 
 			if(program != 1)
@@ -28,8 +31,7 @@ namespace STBEngine.Rendering
 
 			int shader = GL.CreateShader(ShaderType.VertexShader);
 
-			GL.ShaderSource(shader, IOUtils.ReadFile(path));
-			GL.CompileShader(shader);
+			GL.ShaderSource(shader, source);
 
 			Console.WriteLine(GL.GetShaderInfoLog(shader));
 
@@ -39,7 +41,7 @@ namespace STBEngine.Rendering
 
 		}
 
-		public void AddFragmentShader(string path)
+		public void AddFragmentShader(string source)
 		{
 
 			if(program != 1)
@@ -47,7 +49,7 @@ namespace STBEngine.Rendering
 
 			int shader = GL.CreateShader(ShaderType.FragmentShader);
 
-			GL.ShaderSource(shader, IOUtils.ReadFile(path));
+			GL.ShaderSource(shader, source);
 			GL.CompileShader(shader);
 
 			Console.WriteLine(GL.GetShaderInfoLog(shader));
@@ -58,7 +60,7 @@ namespace STBEngine.Rendering
 
 		}
 
-		public void AddGeometryShader(string path)
+		public void AddGeometryShader(string source)
 		{
 
 			if(program != 1)
@@ -66,7 +68,7 @@ namespace STBEngine.Rendering
 
 			int shader = GL.CreateShader(ShaderType.GeometryShader);
 
-			GL.ShaderSource(shader, IOUtils.ReadFile(path));
+			GL.ShaderSource(shader, source);
 			GL.CompileShader(shader);
 
 			Console.WriteLine(GL.GetShaderInfoLog(shader));

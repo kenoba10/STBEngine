@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Reflection;
 
 namespace STBEngine.Utilities
 {
@@ -7,17 +8,27 @@ namespace STBEngine.Utilities
 	public static class IOUtils
 	{
 
-		public static string ReadFile(string path)
+		public static string ReadFile(string path, bool file)
 		{
 
-			return File.ReadAllText(path);
+			if(file)
+				return ReadFile(new FileStream(path, FileMode.Open));
+			else
+				return ReadFile(Assembly.GetExecutingAssembly().GetManifestResourceStream(path));
 
 		}
 
-		public static void WriteFile(string path, string data)
+		public static string ReadFile(Stream stream)
 		{
 
-			File.WriteAllText(path, data);
+			return new StreamReader(stream).ReadToEnd();
+
+		}
+
+		public static void WriteFile(Stream stream, string data)
+		{
+
+			new StreamWriter(stream).Write(data);
 
 		}
 

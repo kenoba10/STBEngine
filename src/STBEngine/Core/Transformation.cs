@@ -31,7 +31,7 @@ namespace STBEngine.Core
 		public void Rotate(Vector3 axis, float angle)
 		{
 
-			rotation *= Quaternion.FromAxisAngle(axis, MathHelper.DegreesToRadians(angle));
+			rotation *= Quaternion.FromAxisAngle(axis, angle);
 
 		}
 
