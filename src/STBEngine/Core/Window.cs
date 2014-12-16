@@ -3,6 +3,7 @@ using System;
 using OpenTK;
 using OpenTK.Input;
 using OpenTK.Graphics;
+using OpenTK.Audio;
 
 namespace STBEngine.Core
 {
@@ -10,8 +11,12 @@ namespace STBEngine.Core
 	public class Window : GameWindow
 	{
 
+		private AudioContext AC;
+
 		public Window(string title) : base(1080, 720, GraphicsMode.Default, title, GameWindowFlags.Default, DisplayDevice.Default, 3, 3, GraphicsContextFlags.Default)
 		{
+
+			AC = new AudioContext();
 
 		}
 
@@ -19,6 +24,8 @@ namespace STBEngine.Core
 		{
 
 			base.OnLoad(e);
+
+			AC.MakeCurrent();
 
 			CoreEngine.Instance.Initialize();
 
@@ -54,6 +61,8 @@ namespace STBEngine.Core
 			base.OnUnload(e);
 
 			CoreEngine.Instance.Terminate();
+
+			AC.Dispose();
 
 		}
 

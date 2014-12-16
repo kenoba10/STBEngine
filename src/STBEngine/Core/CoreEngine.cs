@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 
 using OpenTK;
+using OpenTK.Audio;
+using OpenTK.Audio.OpenAL;
 
 using STBEngine.Core.Event;
 using STBEngine.Rendering;
@@ -49,6 +51,16 @@ namespace STBEngine.Core
 		public void Update()
 		{
 
+			Vector3 position = renderingEngine.Camera.Parent.Transformation.Position;
+			Vector3 orientation = renderingEngine.Camera.Forward;
+			Vector3 up = new Vector3(0f, 1f, 0f);
+
+			AL.Listener(ALListener3f.Position, ref position);
+			AL.Listener(ALListenerfv.Orientation, ref orientation, ref up);
+
+			renderingEngine.Update();
+			physicsEngine.Update();
+
 			game.Update();
 
 			foreach(Entity entity in entities)
@@ -57,9 +69,6 @@ namespace STBEngine.Core
 				entity.Update();
 
 			}
-
-			renderingEngine.Update();
-			physicsEngine.Update();
 
 		}
 

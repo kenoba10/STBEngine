@@ -68,6 +68,7 @@
     <Compile Include="src\STBEngine\Core\Components\Camera.cs" />
     <Compile Include="src\STBEngine\Core\Components\CameraPerspective.cs" />
     <Compile Include="src\STBEngine\Core\Components\CameraOrthographic.cs" />
+    <Compile Include="src\STBEngine\Core\Sound.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="res\shaders\basicFS.glsl" />
@@ -82,4 +83,10 @@
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
+  <ItemGroup>
+    <None Include="lib\OpenTK.dll.config">
+      <Link>OpenTK.dll.config</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
