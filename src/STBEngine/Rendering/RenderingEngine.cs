@@ -73,6 +73,7 @@ namespace STBEngine.Rendering
 		{
 
 			GL.Enable(EnableCap.CullFace);
+			GL.Enable(EnableCap.Texture2D);
 			GL.Enable(EnableCap.DepthTest);
 			GL.Enable(EnableCap.DepthClamp);
 			

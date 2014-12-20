@@ -8,19 +8,20 @@ using STBEngine.Utilities;
 
 namespace STBEngine.Core
 {
+
 	public class Sound
 	{
 
-		private int source;
+		private int sound;
 
 		public Sound()
 		{
 
-			source = 0;
+			sound = 0;
 
 		}
 
-		public void LoadAudio(Stream stream)
+		public void LoadSound(Stream stream)
 		{
 
 			int channels;
@@ -35,9 +36,9 @@ namespace STBEngine.Core
 
 			AL.BufferData(buffer, format, data, data.Length, sampleRate);
 
-			source = AL.GenSource();
+			sound = AL.GenSource();
 
-			AL.Source(source, ALSourcei.Buffer, buffer);
+			AL.Source(sound, ALSourcei.Buffer, buffer);
 
 			AL.DeleteBuffer(buffer);
 
@@ -46,28 +47,28 @@ namespace STBEngine.Core
 		public void Play()
 		{
 
-			AL.SourcePlay(source);
+			AL.SourcePlay(sound);
 
 		}
 
 		public void Pause()
 		{
 
-			AL.SourcePause(source);
+			AL.SourcePause(sound);
 
 		}
 
 		public void Stop()
 		{
 
-			AL.SourceStop(source);
+			AL.SourceStop(sound);
 
 		}
 
-		public void UnloadAudio()
+		public void UnloadSound()
 		{
 
-			AL.DeleteSource(source);
+			AL.DeleteSource(sound);
 
 		}
 
@@ -77,7 +78,7 @@ namespace STBEngine.Core
 			set
 			{
 
-				AL.Source(source, ALSource3f.Position, ref value);
+				AL.Source(sound, ALSource3f.Position, ref value);
 
 			}
 

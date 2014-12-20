@@ -1,6 +1,8 @@
 using System;
 using System.IO;
 using System.Reflection;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace STBEngine.Utilities
 {
@@ -29,6 +31,18 @@ namespace STBEngine.Utilities
 		{
 
 			new StreamWriter(stream).Write(data);
+
+		}
+
+		public static IntPtr LoadTexture(Stream stream, out int width, out int height)
+		{
+
+			Bitmap bitmap = new Bitmap(stream);
+
+			width = bitmap.Width;
+			height = bitmap.Height;
+
+			return bitmap.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb).Scan0;
 
 		}
 

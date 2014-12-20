@@ -1,5 +1,6 @@
 using System;
 
+using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
 namespace STBEngine.Rendering
@@ -11,6 +12,7 @@ namespace STBEngine.Rendering
 		private int vao;
 
 		private int vbo;
+		private int tbo;
 		private int ibo;
 
 		private uint vertexCount;
@@ -30,9 +32,19 @@ namespace STBEngine.Rendering
 
 			GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
 
-			GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(Vertex.SIZE_IN_BYTES * vertexCount), vertices, BufferUsageHint.StaticDraw);
+			GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(Vector3.SizeInBytes * vertexCount), Vertex.CreateVertexArray(vertices), BufferUsageHint.StaticDraw);
 
-			GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, (int) Vertex.SIZE_IN_BYTES, 0);
+			GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, (int) Vector3.SizeInBytes, 0);
+
+			GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+
+			tbo = GL.GenBuffer();
+
+			GL.BindBuffer(BufferTarget.ArrayBuffer, tbo);
+
+			GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(Vector2.SizeInBytes * vertexCount), Vertex.CreateTextureCoordinateArray(vertices), BufferUsageHint.StaticDraw);
+
+			GL.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, (int) Vector2.SizeInBytes, 0);
 
 			GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
 
@@ -40,7 +52,7 @@ namespace STBEngine.Rendering
 
 			GL.BindBuffer(BufferTarget.ElementArrayBuffer, ibo);
 
-			GL.BufferData(BufferTarget.ElementArrayBuffer, new IntPtr(Index.SIZE_IN_BYTES * indexCount), indicies, BufferUsageHint.StaticDraw);
+			GL.BufferData(BufferTarget.ElementArrayBuffer, new IntPtr(4 * indexCount), indicies, BufferUsageHint.StaticDraw);
 
 			GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
 
@@ -54,6 +66,7 @@ namespace STBEngine.Rendering
 			GL.BindVertexArray(vao);
 
 			GL.EnableVertexAttribArray(0);
+			GL.EnableVertexAttribArray(1);
 
 			GL.BindBuffer(BufferTarget.ElementArrayBuffer, ibo);
 
@@ -61,6 +74,7 @@ namespace STBEngine.Rendering
 
 			GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
 
+			GL.DisableVertexAttribArray(1);
 			GL.DisableVertexAttribArray(0);
 
 			GL.BindVertexArray(0);

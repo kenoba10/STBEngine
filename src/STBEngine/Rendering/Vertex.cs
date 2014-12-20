@@ -8,15 +8,46 @@ namespace STBEngine.Rendering
 	public struct Vertex
 	{
 
-		public static readonly uint SIZE = 3;
-		public static readonly uint SIZE_IN_BYTES = SIZE * 4;
-
 		private Vector3 position;
+		private Vector2 textureCoordinates;
 
-		public Vertex(Vector3 position)
+		public Vertex(Vector3 position, Vector2 textureCoordinates)
 		{
 
 			this.position = position;
+			this.textureCoordinates = textureCoordinates;
+
+		}
+
+		public static Vector3[] CreateVertexArray(Vertex[] vertices)
+		{
+
+			Vector3[] newVertices = new Vector3[vertices.Length];
+
+			for(uint i = 0; i < vertices.Length; i++)
+			{
+
+				newVertices[i] = vertices[i].Position;
+
+			}
+
+			return newVertices;
+
+		}
+
+		public static Vector2[] CreateTextureCoordinateArray(Vertex[] vertices)
+		{
+
+			Vector2[] newVertices = new Vector2[vertices.Length];
+
+			for(uint i = 0; i < vertices.Length; i++)
+			{
+
+				newVertices[i] = vertices[i].TextureCoordinates;
+
+			}
+
+			return newVertices;
 
 		}
 
@@ -33,6 +64,24 @@ namespace STBEngine.Rendering
 			{
 
 				this.position = value;
+
+			}
+
+		}
+
+		public Vector2 TextureCoordinates
+		{
+
+			get
+			{
+
+				return textureCoordinates;
+
+			}
+			set
+			{
+
+				this.textureCoordinates = value;
 
 			}
 
