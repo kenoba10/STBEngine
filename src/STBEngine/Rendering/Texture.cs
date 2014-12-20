@@ -13,10 +13,14 @@ namespace STBEngine.Rendering
 
 		private int texture;
 
+		private bool initialized;
+
 		public Texture()
 		{
 
 			texture = 0;
+
+			initialized = false;
 
 		}
 
@@ -41,6 +45,8 @@ namespace STBEngine.Rendering
 
 			GL.BindTexture(TextureTarget.Texture2D, 0);
 
+			initialized = true;
+
 		}
 
 		public void Bind()
@@ -60,7 +66,21 @@ namespace STBEngine.Rendering
 		public void UnloadTexture()
 		{
 
+			initialized = false;
+
 			GL.DeleteTexture(texture);
+
+		}
+
+		public bool Initialized
+		{
+
+			get
+			{
+
+				return initialized;
+
+			}
 
 		}
 

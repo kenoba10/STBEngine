@@ -46,7 +46,11 @@ namespace STBEngine.Rendering
 
 			entity.Shader.Bind();
 
+			entity.Material.Texture.Bind();
+
 			entity.Mesh.Draw();
+
+			entity.Material.Texture.UnBind();
 
 			entity.Shader.UnBind();
 

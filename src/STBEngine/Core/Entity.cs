@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 
+using OpenTK;
+
 using STBEngine.Core.Components;
 using STBEngine.Rendering;
 
@@ -13,6 +15,7 @@ namespace STBEngine.Core
 		private List<Component> components;
 
 		private Transformation transformation;
+		private Material material;
 		private Mesh mesh;
 		private Shader shader;
 
@@ -20,6 +23,7 @@ namespace STBEngine.Core
 		{
 
 			transformation = new Transformation();
+			material = new Material();
 			mesh = new Mesh();
 			shader = new Shader();
 
@@ -39,6 +43,9 @@ namespace STBEngine.Core
 
 			shader.SetUniform("projection", CoreEngine.Instance.RenderingEngine.Camera.Projection);
 			shader.SetUniform("transformation", transformation.GetTransformation());
+
+			shader.SetUniform("useTexture", material.Texture.Initialized ? 1 : 0);
+			shader.SetUniform("baseColor", new Vector4(material.Color.R, material.Color.G, material.Color.B, material.Color.A));
 
 			shader.UnBind();
 
@@ -63,6 +70,7 @@ namespace STBEngine.Core
 
 			shader.Delete();
 			mesh.RemoveVertices();
+			material.Terminate();
 
 		}
 
@@ -93,6 +101,18 @@ namespace STBEngine.Core
 			{
 
 				return transformation;
+
+			}
+
+		}
+
+		public Material Material
+		{
+
+			get
+			{
+
+				return material;
 
 			}
 

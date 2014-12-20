@@ -14,10 +14,14 @@ namespace STBEngine.Core
 
 		private int sound;
 
+		private bool initialized;
+
 		public Sound()
 		{
 
 			sound = 0;
+
+			initialized = false;
 
 		}
 
@@ -41,6 +45,8 @@ namespace STBEngine.Core
 			AL.Source(sound, ALSourcei.Buffer, buffer);
 
 			AL.DeleteBuffer(buffer);
+
+			initialized = true;
 
 		}
 
@@ -68,6 +74,8 @@ namespace STBEngine.Core
 		public void UnloadSound()
 		{
 
+			initialized = false;
+
 			AL.DeleteSource(sound);
 
 		}
@@ -79,6 +87,18 @@ namespace STBEngine.Core
 			{
 
 				AL.Source(sound, ALSource3f.Position, ref value);
+
+			}
+
+		}
+
+		public bool Initialized
+		{
+
+			get
+			{
+
+				return initialized;
 
 			}
 

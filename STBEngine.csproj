@@ -70,6 +70,7 @@
     <Compile Include="src\STBEngine\Core\Components\CameraOrthographic.cs" />
     <Compile Include="src\STBEngine\Core\Sound.cs" />
     <Compile Include="src\STBEngine\Rendering\Texture.cs" />
+    <Compile Include="src\STBEngine\Core\Material.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="res\shaders\basicFS.glsl" />
