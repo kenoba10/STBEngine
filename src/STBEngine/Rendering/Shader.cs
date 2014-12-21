@@ -13,6 +13,8 @@ namespace STBEngine.Rendering
 
 		public static readonly string BASIC_VERTEX_SHADER = IOUtils.ReadFile("STBEngine.res.shaders.basicVS.glsl", false);
 		public static readonly string BASIC_FRAGMENT_SHADER = IOUtils.ReadFile("STBEngine.res.shaders.basicFS.glsl", false);
+		public static readonly string PHONG_VERTEX_SHADER = IOUtils.ReadFile("STBEngine.res.shaders.phongVS.glsl", false);
+		public static readonly string PHONG_FRAGMENT_SHADER = IOUtils.ReadFile("STBEngine.res.shaders.phongFS.glsl", false);
 
 		private int program;
 
@@ -86,6 +88,13 @@ namespace STBEngine.Rendering
 			GL.ValidateProgram(program);
 
 			Console.WriteLine(GL.GetProgramInfoLog(program));
+
+		}
+
+		public void SetUniform(string uniform, int value)
+		{
+
+			GL.Uniform1(GL.GetUniformLocation(program, uniform), value);
 
 		}
 

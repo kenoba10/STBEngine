@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 
-using OpenTK;
-
 using STBEngine.Core.Components;
 using STBEngine.Rendering;
 
@@ -38,17 +36,6 @@ namespace STBEngine.Core
 
 		public void Update()
 		{
-
-			shader.Bind();
-
-			shader.SetUniform("projection", CoreEngine.Instance.RenderingEngine.Camera.Projection);
-			shader.SetUniform("transformation", transformation.GetTransformation());
-
-			shader.SetUniform("useTexture", material.Texture.Initialized ? 1 : 0);
-			shader.SetUniform("baseColor", new Vector4(material.Color.R, material.Color.G, material.Color.B, material.Color.A));
-			shader.SetUniform("ambientLight", material.AmbientLight);
-
-			shader.UnBind();
 
 			foreach(Component component in components)
 			{

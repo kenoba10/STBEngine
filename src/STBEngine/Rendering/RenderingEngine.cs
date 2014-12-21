@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 
+using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 
@@ -14,10 +16,14 @@ namespace STBEngine.Rendering
 
 		private Camera camera;
 
+		private List<DirectionalLight> directionalLights;
+
 		public RenderingEngine()
 		{
 
 			camera = new Camera();
+
+			directionalLights = new List<DirectionalLight>();
 
 		}
 
@@ -38,6 +44,34 @@ namespace STBEngine.Rendering
 
 		public void Terminate()
 		{
+
+		}
+
+		public void UpdateUniforms(Entity entity)
+		{
+
+			Shader shader = entity.Shader;
+
+			shader.Bind();
+
+			shader.SetUniform("projection", CoreEngine.Instance.RenderingEngine.Camera.Projection);
+			shader.SetUniform("transformation", entity.Transformation.GetTransformation());
+
+			shader.SetUniform("useTexture", entity.Material.Texture.Initialized ? 1 : 0);
+			shader.SetUniform("baseColor", new Vector4(entity.Material.Color.R, entity.Material.Color.G, entity.Material.Color.B, entity.Material.Color.A));
+
+			shader.SetUniform("directionalLightCount", 0);
+
+			shader.SetUniform("ambientLight", entity.Material.AmbientLight);
+
+			for(uint i = 0; i < directionalLights.Count; i++)
+			{
+
+				SetUniformDirectionalLight(i, directionalLights[(int) i], shader);
+
+			}
+
+			shader.UnBind();
 
 		}
 
@@ -77,7 +111,6 @@ namespace STBEngine.Rendering
 		{
 
 			GL.Enable(EnableCap.CullFace);
-			GL.Enable(EnableCap.Texture2D);
 			GL.Enable(EnableCap.DepthTest);
 			GL.Enable(EnableCap.DepthClamp);
 			
@@ -99,6 +132,29 @@ namespace STBEngine.Rendering
 		{
 
 			GL.ClearColor(color);
+
+		}
+
+		private void SetUniformDirectionalLight(uint index, DirectionalLight light, Shader shader)
+		{
+
+			shader.SetUniform("directionalLights[" + index + "].base.color", new Vector4(light.Base.Color.R, light.Base.Color.G, light.Base.Color.B, light.Base.Color.A));
+			shader.SetUniform("directionalLights[" + index + "].base.intensity", light.Base.Intensity);
+			shader.SetUniform("directionalLights[" + index + "].direction", light.Direction);
+
+		}
+
+		public void AddDirectionalLight(DirectionalLight light)
+		{
+
+			directionalLights.Add(light);
+
+		}
+
+		public void RemoveDirectionalLight(DirectionalLight light)
+		{
+
+			directionalLights.Remove(light);
 
 		}
 

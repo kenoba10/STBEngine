@@ -66,6 +66,8 @@ namespace STBEngine.Core
 			foreach(Entity entity in entities)
 			{
 
+				renderingEngine.UpdateUniforms(entity);
+
 				entity.Update();
 
 			}

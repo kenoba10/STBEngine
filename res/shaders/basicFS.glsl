@@ -1,10 +1,11 @@
 #version 330 core
 
 in vec2 textureCoordinates1;
+in vec3 normal1;
 
 layout (location = 0) out vec4 color;
 
-uniform float useTexture;
+uniform int useTexture;
 
 uniform vec4 baseColor;
 uniform sampler2D activeTexture;

@@ -71,10 +71,14 @@
     <Compile Include="src\STBEngine\Core\Sound.cs" />
     <Compile Include="src\STBEngine\Rendering\Texture.cs" />
     <Compile Include="src\STBEngine\Core\Material.cs" />
+    <Compile Include="src\STBEngine\Core\Components\BaseLight.cs" />
+    <Compile Include="src\STBEngine\Core\Components\DirectionalLight.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="res\shaders\basicFS.glsl" />
     <EmbeddedResource Include="res\shaders\basicVS.glsl" />
+    <EmbeddedResource Include="res\shaders\phongFS.glsl" />
+    <EmbeddedResource Include="res\shaders\phongVS.glsl" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
