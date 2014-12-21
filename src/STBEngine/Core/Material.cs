@@ -1,5 +1,6 @@
 ﻿using System;
 
+using OpenTK;
 using OpenTK.Graphics;
 
 using STBEngine.Rendering;
@@ -10,14 +11,18 @@ namespace STBEngine.Core
 	public class Material
 	{
 
-		private Texture texture;
 		private Color4 color;
+		private Texture texture;
+
+		private float ambientLight;
 
 		public Material()
 		{
 
-			texture = new Texture();
 			color = new Color4(255, 255, 255, 255);
+			texture = new Texture();
+
+			ambientLight = 1f;
 
 		}
 
@@ -30,6 +35,24 @@ namespace STBEngine.Core
 		{
 
 			texture.UnloadTexture();
+
+		}
+
+		public Color4 Color
+		{
+
+			get
+			{
+
+				return color;
+
+			}
+			set
+			{
+
+				this.color = value;
+
+			}
 
 		}
 
@@ -51,19 +74,19 @@ namespace STBEngine.Core
 
 		}
 
-		public Color4 Color
+		public float AmbientLight
 		{
 
 			get
 			{
 
-				return color;
+				return ambientLight;
 
 			}
 			set
 			{
 
-				this.color = value;
+				this.ambientLight = value;
 
 			}
 
