@@ -73,6 +73,8 @@
     <Compile Include="src\STBEngine\Core\Material.cs" />
     <Compile Include="src\STBEngine\Core\Components\BaseLight.cs" />
     <Compile Include="src\STBEngine\Core\Components\DirectionalLight.cs" />
+    <Compile Include="src\STBEngine\Core\Components\PointLight.cs" />
+    <Compile Include="src\STBEngine\Core\Components\Attenuation.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="res\shaders\basicFS.glsl" />

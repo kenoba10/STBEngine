@@ -1,7 +1,9 @@
 ﻿#version 330 core
 
 const int MAX_DIRECTIONAL_LIGHTS = 8;
+const int MAX_POINT_LIGHTS = 8;
 
+in vec3 position1;
 in vec2 textureCoordinates1;
 in vec3 normal1;
 
@@ -15,6 +17,15 @@ struct BaseLight
 
 };
 
+struct Attenuation
+{
+	
+	float constant;
+	float linear;
+	float exponent;
+
+};
+
 struct DirectionalLight
 {
 
@@ -23,6 +34,18 @@ struct DirectionalLight
 
 };
 
+struct PointLight
+{
+
+	BaseLight base;
+	Attenuation attenuation;
+	vec3 position;
+	float range;
+
+};
+
+uniform vec3 eyePosition;
+
 uniform int useTexture;
 
 uniform vec4 baseColor;
@@ -30,17 +53,36 @@ uniform sampler2D activeTexture;
 
 uniform float ambientLight;
 uniform DirectionalLight directionalLights[MAX_DIRECTIONAL_LIGHTS];
+uniform PointLight pointLights[MAX_POINT_LIGHTS];
+
+uniform float specularIntensity;
+uniform float specularExponent;
 
 vec4 calculateLight(BaseLight light, vec3 direction, vec3 normal)
 {
 
-	vec4 diffuseColor = vec4(0, 0, 0, 0);
 	float diffuseFactor = dot(normal, direction);
 
+	vec4 diffuseColor = vec4(0, 0, 0, 0);
+	vec4 specularColor = vec4(0, 0, 0, 0);
+
 	if(diffuseFactor > 0)
+	{
+		
 		diffuseColor = vec4(light.color) * light.intensity * diffuseFactor;
 
-	return diffuseColor;
+		vec3 directionToEye = normalize(eyePosition - position1);
+		vec3 directionToReflect = normalize(reflect(direction, normal));
+
+		float specularFactor = pow(dot(directionToEye, directionToReflect), specularExponent);
+
+		if(specularFactor > 0)
+			specularColor = vec4(light.color) * specularIntensity * specularFactor;
+
+
+	}
+
+	return diffuseColor + specularColor;
 
 }
 
@@ -48,6 +90,25 @@ vec4 calculateDirectionalLight(DirectionalLight light, vec3 normal)
 {
 
 	return calculateLight(light.base, light.direction, normal);
+
+}
+
+vec4 calculatePointLight(PointLight light, vec3 normal)
+{
+
+	vec3 direction = position1 - light.position;
+	float distance = length(direction);
+
+	direction = normalize(direction);
+
+	if(distance > light.range)
+		return vec4(0, 0, 0, 0);
+
+	vec4 color = calculateLight(light.base, direction, normal);
+
+	float attenuation = light.attenuation.constant + light.attenuation.linear * distance + light.attenuation.exponent * distance * distance + 0.0001;
+
+	return color / attenuation;
 
 }
 
@@ -82,6 +143,30 @@ void main()
 
 	if(directionalLights[7].base.intensity > 0)
 		light += calculateDirectionalLight(directionalLights[7], normal1);
+
+	if(pointLights[0].base.intensity > 0)
+		light += calculatePointLight(pointLights[0], normal1);
+
+	if(pointLights[1].base.intensity > 0)
+		light += calculatePointLight(pointLights[1], normal1);
+
+	if(pointLights[2].base.intensity > 0)
+		light += calculatePointLight(pointLights[2], normal1);
+
+	if(pointLights[3].base.intensity > 0)
+		light += calculatePointLight(pointLights[3], normal1);
+
+	if(pointLights[4].base.intensity > 0)
+		light += calculatePointLight(pointLights[4], normal1);
+
+	if(pointLights[5].base.intensity > 0)
+		light += calculatePointLight(pointLights[5], normal1);
+
+	if(pointLights[6].base.intensity > 0)
+		light += calculatePointLight(pointLights[6], normal1);
+
+	if(pointLights[7].base.intensity > 0)
+		light += calculatePointLight(pointLights[7], normal1);
 
 	if(useTexture == 1)
 		color = light * outputColor * outputTexture;

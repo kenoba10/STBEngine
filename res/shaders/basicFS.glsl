@@ -1,5 +1,6 @@
 #version 330 core
 
+in vec3 position1;
 in vec2 textureCoordinates1;
 in vec3 normal1;
 

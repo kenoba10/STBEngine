@@ -17,6 +17,7 @@ namespace STBEngine.Rendering
 		private Camera camera;
 
 		private List<DirectionalLight> directionalLights;
+		private List<PointLight> pointLights;
 
 		public RenderingEngine()
 		{
@@ -24,6 +25,7 @@ namespace STBEngine.Rendering
 			camera = new Camera();
 
 			directionalLights = new List<DirectionalLight>();
+			pointLights = new List<PointLight>();
 
 		}
 
@@ -57,10 +59,10 @@ namespace STBEngine.Rendering
 			shader.SetUniform("projection", CoreEngine.Instance.RenderingEngine.Camera.Projection);
 			shader.SetUniform("transformation", entity.Transformation.GetTransformation());
 
+			shader.SetUniform("eyePosition", CoreEngine.Instance.RenderingEngine.Camera.Parent.Transformation.Position);
+
 			shader.SetUniform("useTexture", entity.Material.Texture.Initialized ? 1 : 0);
 			shader.SetUniform("baseColor", new Vector4(entity.Material.Color.R, entity.Material.Color.G, entity.Material.Color.B, entity.Material.Color.A));
-
-			shader.SetUniform("directionalLightCount", 0);
 
 			shader.SetUniform("ambientLight", entity.Material.AmbientLight);
 
@@ -70,6 +72,16 @@ namespace STBEngine.Rendering
 				SetUniformDirectionalLight(i, directionalLights[(int) i], shader);
 
 			}
+
+			for(uint i = 0; i < pointLights.Count; i++)
+			{
+
+				SetUniformPointLight(i, pointLights[(int) i], shader);
+
+			}
+
+			shader.SetUniform("specularIntensity", entity.Material.SpecularIntensity);
+			shader.SetUniform("specularExponent", entity.Material.SpecularExponent);
 
 			shader.UnBind();
 
@@ -144,6 +156,19 @@ namespace STBEngine.Rendering
 
 		}
 
+		private void SetUniformPointLight(uint index, PointLight light, Shader shader)
+		{
+
+			shader.SetUniform("pointLights[" + index + "].base.color", new Vector4(light.Base.Color.R, light.Base.Color.G, light.Base.Color.B, light.Base.Color.A));
+			shader.SetUniform("pointLights[" + index + "].base.intensity", light.Base.Intensity);
+			shader.SetUniform("pointLights[" + index + "].attenuation.constant", light.Attenuation.Constant);
+			shader.SetUniform("pointLights[" + index + "].attenuation.linear", light.Attenuation.Linear);
+			shader.SetUniform("pointLights[" + index + "].attenuation.exponent", light.Attenuation.Exponent);
+			shader.SetUniform("pointLights[" + index + "].position", light.Position);
+			shader.SetUniform("pointLights[" + index + "].range", light.Range);
+
+		}
+
 		public void AddDirectionalLight(DirectionalLight light)
 		{
 
@@ -155,6 +180,20 @@ namespace STBEngine.Rendering
 		{
 
 			directionalLights.Remove(light);
+
+		}
+
+		public void AddPointLight(PointLight light)
+		{
+
+			pointLights.Add(light);
+
+		}
+
+		public void RemovePointLight(PointLight light)
+		{
+
+			pointLights.Remove(light);
 
 		}
 

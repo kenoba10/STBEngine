@@ -16,6 +16,9 @@ namespace STBEngine.Core
 
 		private float ambientLight;
 
+		private float specularIntensity;
+		private float specularExponent;
+
 		public Material()
 		{
 
@@ -23,6 +26,9 @@ namespace STBEngine.Core
 			texture = new Texture();
 
 			ambientLight = 1f;
+
+			specularIntensity = 2f;
+			specularExponent = 32f;
 
 		}
 
@@ -87,6 +93,42 @@ namespace STBEngine.Core
 			{
 
 				this.ambientLight = value;
+
+			}
+
+		}
+
+		public float SpecularIntensity
+		{
+
+			get
+			{
+
+				return specularIntensity;
+
+			}
+			set
+			{
+
+				this.specularIntensity = value;
+
+			}
+
+		}
+
+		public float SpecularExponent
+		{
+
+			get
+			{
+
+				return specularExponent;
+
+			}
+			set
+			{
+
+				this.specularExponent = value;
 
 			}
 
