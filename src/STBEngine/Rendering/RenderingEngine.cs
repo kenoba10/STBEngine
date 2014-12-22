@@ -18,6 +18,7 @@ namespace STBEngine.Rendering
 
 		private List<DirectionalLight> directionalLights;
 		private List<PointLight> pointLights;
+		private List<SpotLight> spotLights;
 
 		public RenderingEngine()
 		{
@@ -26,6 +27,7 @@ namespace STBEngine.Rendering
 
 			directionalLights = new List<DirectionalLight>();
 			pointLights = new List<PointLight>();
+			spotLights = new List<SpotLight>();
 
 		}
 
@@ -77,6 +79,13 @@ namespace STBEngine.Rendering
 			{
 
 				SetUniformPointLight(i, pointLights[(int) i], shader);
+
+			}
+
+			for(uint i = 0; i < spotLights.Count; i++)
+			{
+
+				SetUniformSpotLight(i, spotLights[(int) i], shader);
 
 			}
 
@@ -169,6 +178,21 @@ namespace STBEngine.Rendering
 
 		}
 
+		private void SetUniformSpotLight(uint index, SpotLight light, Shader shader)
+		{
+
+			shader.SetUniform("spotLights[" + index + "].base.base.color", new Vector4(light.Base.Base.Color.R, light.Base.Base.Color.G, light.Base.Base.Color.B, light.Base.Base.Color.A));
+			shader.SetUniform("spotLights[" + index + "].base.base.intensity", light.Base.Base.Intensity);
+			shader.SetUniform("spotLights[" + index + "].base.attenuation.constant", light.Base.Attenuation.Constant);
+			shader.SetUniform("spotLights[" + index + "].base.attenuation.linear", light.Base.Attenuation.Linear);
+			shader.SetUniform("spotLights[" + index + "].base.attenuation.exponent", light.Base.Attenuation.Exponent);
+			shader.SetUniform("spotLights[" + index + "].base.position", light.Base.Position);
+			shader.SetUniform("spotLights[" + index + "].base.range", light.Base.Range);
+			shader.SetUniform("spotLights[" + index + "].direction", light.Direction);
+			shader.SetUniform("spotLights[" + index + "].cutoff", light.CutOff);
+
+		}
+
 		public void AddDirectionalLight(DirectionalLight light)
 		{
 
@@ -194,6 +218,20 @@ namespace STBEngine.Rendering
 		{
 
 			pointLights.Remove(light);
+
+		}
+
+		public void AddSpotLight(SpotLight light)
+		{
+
+			spotLights.Add(light);
+
+		}
+
+		public void RemoveSpotLight(SpotLight light)
+		{
+
+			spotLights.Remove(light);
 
 		}
 

@@ -2,6 +2,7 @@
 
 const int MAX_DIRECTIONAL_LIGHTS = 8;
 const int MAX_POINT_LIGHTS = 8;
+const int MAX_SPOT_LIGHTS = 8;
 
 in vec3 position1;
 in vec2 textureCoordinates1;
@@ -44,6 +45,15 @@ struct PointLight
 
 };
 
+struct SpotLight
+{
+
+	PointLight base;
+	vec3 direction;
+	float cutoff;
+
+};
+
 uniform vec3 eyePosition;
 
 uniform int useTexture;
@@ -54,6 +64,7 @@ uniform sampler2D activeTexture;
 uniform float ambientLight;
 uniform DirectionalLight directionalLights[MAX_DIRECTIONAL_LIGHTS];
 uniform PointLight pointLights[MAX_POINT_LIGHTS];
+uniform SpotLight spotLights[MAX_SPOT_LIGHTS];
 
 uniform float specularIntensity;
 uniform float specularExponent;
@@ -112,6 +123,25 @@ vec4 calculatePointLight(PointLight light, vec3 normal)
 
 }
 
+vec4 calculateSpotLight(SpotLight light, vec3 normal)
+{
+
+	vec3 direction = normalize(position1 - light.base.position);
+	float factor = dot(direction, light.direction);
+
+	vec4 color = vec4(0, 0, 0, 0);
+
+	if(factor > light.cutoff)
+	{
+		
+		color = calculatePointLight(light.base, normal) * (1 - (1 - factor) / (1 - light.cutoff));
+
+	}
+
+	return color;
+
+}
+
 void main()
 {
 	
@@ -167,6 +197,30 @@ void main()
 
 	if(pointLights[7].base.intensity > 0)
 		light += calculatePointLight(pointLights[7], normal1);
+
+	if(spotLights[0].base.base.intensity > 0)
+		light += calculateSpotLight(spotLights[0], normal1);
+
+	if(spotLights[1].base.base.intensity > 0)
+		light += calculateSpotLight(spotLights[1], normal1);
+
+	if(spotLights[2].base.base.intensity > 0)
+		light += calculateSpotLight(spotLights[2], normal1);
+
+	if(spotLights[3].base.base.intensity > 0)
+		light += calculateSpotLight(spotLights[3], normal1);
+
+	if(spotLights[4].base.base.intensity > 0)
+		light += calculateSpotLight(spotLights[4], normal1);
+
+	if(spotLights[5].base.base.intensity > 0)
+		light += calculateSpotLight(spotLights[5], normal1);
+
+	if(spotLights[6].base.base.intensity > 0)
+		light += calculateSpotLight(spotLights[6], normal1);
+
+	if(spotLights[7].base.base.intensity > 0)
+		light += calculateSpotLight(spotLights[7], normal1);
 
 	if(useTexture == 1)
 		color = light * outputColor * outputTexture;
