@@ -80,6 +80,18 @@ namespace STBEngine.Core
 
 		}
 
+		public bool Looping
+		{
+			
+			set
+			{
+
+				AL.Source(sound, ALSourceb.Looping, value);
+
+			}
+
+		}
+
 		public Vector3 Position
 		{
 
