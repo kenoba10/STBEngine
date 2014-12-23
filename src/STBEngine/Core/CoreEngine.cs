@@ -67,6 +67,7 @@ namespace STBEngine.Core
 			{
 
 				renderingEngine.UpdateUniforms(entity);
+				physicsEngine.Simulate(entity);
 
 				entity.Update();
 

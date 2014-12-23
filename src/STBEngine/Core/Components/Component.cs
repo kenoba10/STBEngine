@@ -18,6 +18,11 @@ namespace STBEngine.Core.Components
 
 		}
 
+		public virtual void Simulate()
+		{
+
+		}
+
 		public virtual void Terminate()
 		{
 

@@ -1,5 +1,7 @@
 using System;
 
+using STBEngine.Core;
+
 namespace STBEngine.Physics
 {
 
@@ -13,6 +15,13 @@ namespace STBEngine.Physics
 
 		public void Update()
 		{
+
+		}
+
+		public void Simulate(Entity entity)
+		{
+
+			entity.Simulate();
 
 		}
 

@@ -24,21 +24,21 @@ namespace STBEngine.Core
 		public void Translate(Vector3 direction, float distance)
 		{
 
-			position += direction * distance;
+			position = position + (direction * distance);
 
 		}
 
 		public void Rotate(Vector3 axis, float angle)
 		{
 
-			rotation *= Quaternion.FromAxisAngle(axis, angle);
+			rotation = (rotation * Quaternion.FromAxisAngle(axis, MathHelper.DegreesToRadians(angle))).Normalized();
 
 		}
 
 		public void Enlarge(Vector3 size)
 		{
 
-			scale += size;
+			scale = scale + size;
 
 		}
 

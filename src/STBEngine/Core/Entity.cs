@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 
+using OpenTK;
+
 using STBEngine.Core.Components;
 using STBEngine.Rendering;
 
@@ -16,6 +18,7 @@ namespace STBEngine.Core
 		private Material material;
 		private Mesh mesh;
 		private Shader shader;
+		private Vector3 velocity;
 
 		public Entity()
 		{
@@ -24,6 +27,7 @@ namespace STBEngine.Core
 			material = new Material();
 			mesh = new Mesh();
 			shader = new Shader();
+			velocity = new Vector3(0f, 0f, 0f);
 
 			components = new List<Component>();
 
@@ -41,6 +45,21 @@ namespace STBEngine.Core
 			{
 
 				component.Update();
+
+			}
+
+		}
+
+		public void Simulate()
+		{
+
+			transformation.Translate(velocity, 1f);
+			velocity = new Vector3(0f, 0f, 0f);
+
+			foreach(Component component in components)
+			{
+
+				component.Simulate();
 
 			}
 
@@ -125,6 +144,24 @@ namespace STBEngine.Core
 			{
 
 				return shader;
+
+			}
+
+		}
+
+		public Vector3 Velocity
+		{
+
+			get
+			{
+
+				return velocity;
+
+			}
+			set
+			{
+
+				this.velocity = value;
 
 			}
 
