@@ -29,7 +29,7 @@ namespace STBEngine.Core
 			material = new Material();
 			mesh = new Mesh();
 			shader = new Shader();
-			collider = new AABB();
+			collider = new BoundingSphere();
 			velocity = new Vector3(0f, 0f, 0f);
 
 			components = new List<Component>();

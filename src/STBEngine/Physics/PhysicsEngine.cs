@@ -24,6 +24,8 @@ namespace STBEngine.Physics
 
 			entity.Simulate();
 
+			entity.Collider.Transform(entity.Transformation);
+
 			foreach(Entity otherEntity in CoreEngine.Instance.Entities)
 			{
 

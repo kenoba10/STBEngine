@@ -8,7 +8,8 @@ namespace STBEngine.Physics.Colliders
 	public enum ColliderType
 	{
 
-		AABB
+		AxisAlignedBoundingBox,
+		BoundingSphere
 
 	};
 

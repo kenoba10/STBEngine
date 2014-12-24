@@ -81,7 +81,8 @@
     <Compile Include="src\STBEngine\Core\Components\FreeLook.cs" />
     <Compile Include="src\STBEngine\Physics\Colliders\Collider.cs" />
     <Compile Include="src\STBEngine\Physics\Colliders\Intersection.cs" />
-    <Compile Include="src\STBEngine\Physics\Colliders\AABB.cs" />
+    <Compile Include="src\STBEngine\Physics\Colliders\BoundingSphere.cs" />
+    <Compile Include="src\STBEngine\Physics\Colliders\AxisAlignedBoundingBox.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="res\shaders\basicFS.glsl" />

@@ -7,7 +7,7 @@ using STBEngine.Core;
 namespace STBEngine.Physics.Colliders
 {
 
-	public class AABB : Collider
+	public class AxisAlignedBoundingBox : Collider
 	{
 
 		private Vector3 minimumExtent;
@@ -16,7 +16,7 @@ namespace STBEngine.Physics.Colliders
 		private Vector3 minimumExtentTransformed;
 		private Vector3 maximumExtentTransformed;
 
-		public AABB()
+		public AxisAlignedBoundingBox()
 		{
 
 			minimumExtent = new Vector3(-1f, -1f, -1f);
@@ -30,10 +30,10 @@ namespace STBEngine.Physics.Colliders
 		public override Intersection Intersect(Collider collider)
 		{
 
-			if(collider.Type == ColliderType.AABB)
+			if(collider.Type == ColliderType.AxisAlignedBoundingBox)
 			{
 
-				AABB aabb = (AABB) collider;
+				AxisAlignedBoundingBox aabb = (AxisAlignedBoundingBox) collider;
 
 				Vector3 distance1 = aabb.MaximumExtent - maximumExtentTransformed;
 				Vector3 distance2 = minimumExtentTransformed - aabb.MaximumExtent;
@@ -70,7 +70,7 @@ namespace STBEngine.Physics.Colliders
 			set
 			{
 
-				this.minimumExtentTransformed = value;
+				this.minimumExtent = value;
 
 			}
 
@@ -88,7 +88,7 @@ namespace STBEngine.Physics.Colliders
 			set
 			{
 
-				this.maximumExtentTransformed = value;
+				this.maximumExtent = value;
 
 			}
 
@@ -100,7 +100,7 @@ namespace STBEngine.Physics.Colliders
 			get
 			{
 
-				return ColliderType.AABB;
+				return ColliderType.AxisAlignedBoundingBox;
 
 			}
 
