@@ -5,6 +5,7 @@ using OpenTK;
 
 using STBEngine.Core.Components;
 using STBEngine.Rendering;
+using STBEngine.Physics.Colliders;
 
 namespace STBEngine.Core
 {
@@ -18,6 +19,7 @@ namespace STBEngine.Core
 		private Material material;
 		private Mesh mesh;
 		private Shader shader;
+		private Collider collider;
 		private Vector3 velocity;
 
 		public Entity()
@@ -27,6 +29,7 @@ namespace STBEngine.Core
 			material = new Material();
 			mesh = new Mesh();
 			shader = new Shader();
+			collider = new AABB();
 			velocity = new Vector3(0f, 0f, 0f);
 
 			components = new List<Component>();
@@ -110,6 +113,12 @@ namespace STBEngine.Core
 				return transformation;
 
 			}
+			set
+			{
+
+				this.transformation = value;
+
+			}
 
 		}
 
@@ -120,6 +129,12 @@ namespace STBEngine.Core
 			{
 
 				return material;
+
+			}
+			set
+			{
+
+				this.material = value;
 
 			}
 
@@ -134,6 +149,12 @@ namespace STBEngine.Core
 				return mesh;
 
 			}
+			set
+			{
+
+				this.mesh = value;
+
+			}
 
 		}
 
@@ -144,6 +165,30 @@ namespace STBEngine.Core
 			{
 
 				return shader;
+
+			}
+			set
+			{
+
+				this.shader = value;
+
+			}
+
+		}
+
+		public Collider Collider
+		{
+
+			get
+			{
+
+				return collider;
+
+			}
+			set
+			{
+
+				this.collider = value;
 
 			}
 

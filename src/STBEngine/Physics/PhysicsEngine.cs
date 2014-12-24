@@ -1,6 +1,7 @@
 using System;
 
 using STBEngine.Core;
+using STBEngine.Physics.Colliders;
 
 namespace STBEngine.Physics
 {
@@ -22,6 +23,16 @@ namespace STBEngine.Physics
 		{
 
 			entity.Simulate();
+
+			foreach(Entity otherEntity in CoreEngine.Instance.Entities)
+			{
+
+				Intersection intersection = entity.Collider.Intersect(otherEntity.Collider);
+
+				Console.WriteLine(intersection.Intersecting);
+				Console.WriteLine(intersection.Distance);
+
+			}
 
 		}
 

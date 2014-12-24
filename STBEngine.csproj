@@ -41,6 +41,7 @@
     <Folder Include="src\STBEngine\Core\Components\" />
     <Folder Include="res\" />
     <Folder Include="res\shaders\" />
+    <Folder Include="src\STBEngine\Physics\Colliders\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Drawing" />
@@ -78,6 +79,9 @@
     <Compile Include="src\STBEngine\Core\Components\SpotLight.cs" />
     <Compile Include="src\STBEngine\Core\Components\FreeMove.cs" />
     <Compile Include="src\STBEngine\Core\Components\FreeLook.cs" />
+    <Compile Include="src\STBEngine\Physics\Colliders\Collider.cs" />
+    <Compile Include="src\STBEngine\Physics\Colliders\Intersection.cs" />
+    <Compile Include="src\STBEngine\Physics\Colliders\AABB.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="res\shaders\basicFS.glsl" />

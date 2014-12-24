@@ -136,6 +136,30 @@ namespace STBEngine.Core
 
 		}
 
+		public IGame Game
+		{
+
+			get
+			{
+
+				return game;
+
+			}
+
+		}
+
+		public List<Entity> Entities
+		{
+
+			get
+			{
+
+				return entities;
+
+			}
+
+		}
+
 		public STBEventManager EventHandler
 		{
 
