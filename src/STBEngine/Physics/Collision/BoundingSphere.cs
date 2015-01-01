@@ -4,7 +4,7 @@ using OpenTK;
 
 using STBEngine.Core;
 
-namespace STBEngine.Physics.Colliders
+namespace STBEngine.Physics.Collision
 {
 
 	public class BoundingSphere : Collider
@@ -15,11 +15,11 @@ namespace STBEngine.Physics.Colliders
 
 		private Vector3 centerTransformed;
 
-		public BoundingSphere()
+		public BoundingSphere(Vector3 center, float radius)
 		{
 
-			center = new Vector3(0f, 0f, 0f);
-			radius = 1f;
+			this.center = center;
+			this.radius = radius;
 
 			centerTransformed = new Vector3(0f, 0f, 0f);
 
@@ -33,12 +33,12 @@ namespace STBEngine.Physics.Colliders
 
 				BoundingSphere bs = (BoundingSphere) collider;
 				
-				Vector3 direction = bs.Center - center;
+				Vector3 direction = bs.Center - centerTransformed;
 
 				float radiusDistance = radius + bs.Radius;
 				float centerDistance = direction.Length;
 
-				direction /= centerDistance;
+				direction.Normalize();
 
 				float distance = centerDistance - radiusDistance;
 

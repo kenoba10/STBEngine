@@ -11,7 +11,7 @@ namespace STBEngine.Rendering
 
 		private int vao;
 
-		private int vbo;
+		private int pbo;
 		private int tbo;
 		private int nbo;
 
@@ -32,9 +32,9 @@ namespace STBEngine.Rendering
 
 			GL.BindVertexArray(vao);
 
-			vbo = GL.GenBuffer();
+			pbo = GL.GenBuffer();
 
-			GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
+			GL.BindBuffer(BufferTarget.ArrayBuffer, pbo);
 
 			GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(Vector3.SizeInBytes * vertexCount), Vertex.CreateVertexArray(vertices), BufferUsageHint.StaticDraw);
 
@@ -104,7 +104,7 @@ namespace STBEngine.Rendering
 
 			GL.DeleteBuffer(nbo);
 			GL.DeleteBuffer(tbo);
-			GL.DeleteBuffer(vbo);
+			GL.DeleteBuffer(pbo);
 
 			GL.DeleteVertexArray(vao);
 

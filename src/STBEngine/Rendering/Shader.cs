@@ -12,8 +12,10 @@ namespace STBEngine.Rendering
 	{
 
 		public static readonly string BASIC_VERTEX_SHADER = IOUtils.ReadFile("STBEngine.res.shaders.basicVS.glsl", false);
+		public static readonly string BASIC_GEOMETRY_SHADER = IOUtils.ReadFile("STBEngine.res.shaders.basicGS.glsl", false);
 		public static readonly string BASIC_FRAGMENT_SHADER = IOUtils.ReadFile("STBEngine.res.shaders.basicFS.glsl", false);
 		public static readonly string PHONG_VERTEX_SHADER = IOUtils.ReadFile("STBEngine.res.shaders.phongVS.glsl", false);
+		public static readonly string PHONG_GEOMETRY_SHADER = IOUtils.ReadFile("STBEngine.res.shaders.phongGS.glsl", false);
 		public static readonly string PHONG_FRAGMENT_SHADER = IOUtils.ReadFile("STBEngine.res.shaders.phongFS.glsl", false);
 
 		private int program;
@@ -35,26 +37,15 @@ namespace STBEngine.Rendering
 
 			GL.ShaderSource(shader, source);
 
-			Console.WriteLine(GL.GetShaderInfoLog(shader));
+			int result;
+			GL.GetShader(shader, ShaderParameter.CompileStatus, out result);
 
-			GL.AttachShader(program, shader);
+			if(result == 0)
+			{
 
-			GL.DeleteShader(shader);
+				Console.WriteLine(GL.GetShaderInfoLog(program));
 
-		}
-
-		public void AddFragmentShader(string source)
-		{
-
-			if(program != 1)
-				program = GL.CreateProgram();
-
-			int shader = GL.CreateShader(ShaderType.FragmentShader);
-
-			GL.ShaderSource(shader, source);
-			GL.CompileShader(shader);
-
-			Console.WriteLine(GL.GetShaderInfoLog(shader));
+			}
 
 			GL.AttachShader(program, shader);
 
@@ -73,7 +64,42 @@ namespace STBEngine.Rendering
 			GL.ShaderSource(shader, source);
 			GL.CompileShader(shader);
 
-			Console.WriteLine(GL.GetShaderInfoLog(shader));
+			int result;
+			GL.GetShader(shader, ShaderParameter.CompileStatus, out result);
+
+			if(result == 0)
+			{
+
+				Console.WriteLine(GL.GetShaderInfoLog(program));
+
+			}
+
+			GL.AttachShader(program, shader);
+
+			GL.DeleteShader(shader);
+
+		}
+
+		public void AddFragmentShader(string source)
+		{
+
+			if(program != 1)
+				program = GL.CreateProgram();
+
+			int shader = GL.CreateShader(ShaderType.FragmentShader);
+
+			GL.ShaderSource(shader, source);
+			GL.CompileShader(shader);
+
+			int result;
+			GL.GetShader(shader, ShaderParameter.CompileStatus, out result);
+
+			if(result == 0)
+			{
+
+				Console.WriteLine(GL.GetShaderInfoLog(program));
+
+			}
 
 			GL.AttachShader(program, shader);
 
@@ -87,7 +113,25 @@ namespace STBEngine.Rendering
 			GL.LinkProgram(program);
 			GL.ValidateProgram(program);
 
-			Console.WriteLine(GL.GetProgramInfoLog(program));
+			int result;
+
+			GL.GetProgram(program, GetProgramParameterName.LinkStatus, out result);
+
+			if(result == 0)
+			{
+
+				Console.WriteLine(GL.GetProgramInfoLog(program));
+
+			}
+
+			GL.GetProgram(program, GetProgramParameterName.ValidateStatus, out result);
+
+			if(result == 0)
+			{
+
+				Console.WriteLine(GL.GetProgramInfoLog(program));
+
+			}
 
 		}
 

@@ -5,7 +5,7 @@ using OpenTK;
 
 using STBEngine.Core.Components;
 using STBEngine.Rendering;
-using STBEngine.Physics.Colliders;
+using STBEngine.Physics.Collision;
 
 namespace STBEngine.Core
 {
@@ -19,8 +19,9 @@ namespace STBEngine.Core
 		private Material material;
 		private Mesh mesh;
 		private Shader shader;
-		private Collider collider;
+		private List<Collider> colliders;
 		private Vector3 velocity;
+		private float distance;
 
 		public Entity()
 		{
@@ -29,8 +30,9 @@ namespace STBEngine.Core
 			material = new Material();
 			mesh = new Mesh();
 			shader = new Shader();
-			collider = new BoundingSphere();
+			colliders = new List<Collider>();
 			velocity = new Vector3(0f, 0f, 0f);
+			distance = 0.5f;
 
 			components = new List<Component>();
 
@@ -56,8 +58,10 @@ namespace STBEngine.Core
 		public void Simulate()
 		{
 
-			transformation.Translate(velocity, 1f);
+			transformation.Translate(velocity.Normalized(), distance);
+
 			velocity = new Vector3(0f, 0f, 0f);
+			distance = 0.5f;
 
 			foreach(Component component in components)
 			{
@@ -65,6 +69,8 @@ namespace STBEngine.Core
 				component.Simulate();
 
 			}
+
+			transformation.Translate(velocity.Normalized(), distance);
 
 		}
 
@@ -176,19 +182,19 @@ namespace STBEngine.Core
 
 		}
 
-		public Collider Collider
+		public List<Collider> Colliders
 		{
 
 			get
 			{
 
-				return collider;
+				return colliders;
 
 			}
 			set
 			{
 
-				this.collider = value;
+				this.colliders = value;
 
 			}
 
@@ -207,6 +213,24 @@ namespace STBEngine.Core
 			{
 
 				this.velocity = value;
+
+			}
+
+		}
+
+		public float Distance
+		{
+
+			get
+			{
+
+				return distance;
+
+			}
+			set
+			{
+
+				this.distance = value;
 
 			}
 

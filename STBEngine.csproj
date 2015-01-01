@@ -41,7 +41,7 @@
     <Folder Include="src\STBEngine\Core\Components\" />
     <Folder Include="res\" />
     <Folder Include="res\shaders\" />
-    <Folder Include="src\STBEngine\Physics\Colliders\" />
+    <Folder Include="src\STBEngine\Physics\Collision\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Drawing" />
@@ -79,16 +79,18 @@
     <Compile Include="src\STBEngine\Core\Components\SpotLight.cs" />
     <Compile Include="src\STBEngine\Core\Components\FreeMove.cs" />
     <Compile Include="src\STBEngine\Core\Components\FreeLook.cs" />
-    <Compile Include="src\STBEngine\Physics\Colliders\Collider.cs" />
-    <Compile Include="src\STBEngine\Physics\Colliders\Intersection.cs" />
-    <Compile Include="src\STBEngine\Physics\Colliders\BoundingSphere.cs" />
-    <Compile Include="src\STBEngine\Physics\Colliders\AxisAlignedBoundingBox.cs" />
+    <Compile Include="src\STBEngine\Physics\Collision\Collider.cs" />
+    <Compile Include="src\STBEngine\Physics\Collision\Intersection.cs" />
+    <Compile Include="src\STBEngine\Physics\Collision\BoundingSphere.cs" />
+    <Compile Include="src\STBEngine\Physics\Collision\CollisionResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="res\shaders\basicFS.glsl" />
     <EmbeddedResource Include="res\shaders\basicVS.glsl" />
     <EmbeddedResource Include="res\shaders\phongFS.glsl" />
     <EmbeddedResource Include="res\shaders\phongVS.glsl" />
+    <EmbeddedResource Include="res\shaders\basicGS.glsl" />
+    <EmbeddedResource Include="res\shaders\phongGS.glsl" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

@@ -54,7 +54,7 @@ namespace STBEngine.Core
 			Vector3 position = renderingEngine.Camera.Parent.Transformation.Position;
 			Vector3 orientation = renderingEngine.Camera.Forward;
 			Vector3 up = new Vector3(0f, 1f, 0f);
-
+			
 			AL.Listener(ALListener3f.Position, ref position);
 			AL.Listener(ALListenerfv.Orientation, ref orientation, ref up);
 

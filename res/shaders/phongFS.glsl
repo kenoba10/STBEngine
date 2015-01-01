@@ -4,11 +4,16 @@ const int MAX_DIRECTIONAL_LIGHTS = 8;
 const int MAX_POINT_LIGHTS = 8;
 const int MAX_SPOT_LIGHTS = 8;
 
-in vec3 position1;
-in vec2 textureCoordinates1;
-in vec3 normal1;
-
 layout (location = 0) out vec4 color;
+
+in Vertex
+{
+	
+	vec3 position;
+	vec2 textureCoordinates;
+	vec3 normal;
+
+} vertex;
 
 struct BaseLight
 {
@@ -82,7 +87,7 @@ vec4 calculateLight(BaseLight light, vec3 direction, vec3 normal)
 		
 		diffuseColor = vec4(light.color) * light.intensity * diffuseFactor;
 
-		vec3 directionToEye = normalize(eyePosition - position1);
+		vec3 directionToEye = normalize(eyePosition - vertex.position);
 		vec3 directionToReflect = normalize(reflect(direction, normal));
 
 		float specularFactor = pow(dot(directionToEye, directionToReflect), specularExponent);
@@ -107,7 +112,7 @@ vec4 calculateDirectionalLight(DirectionalLight light, vec3 normal)
 vec4 calculatePointLight(PointLight light, vec3 normal)
 {
 
-	vec3 direction = position1 - light.position;
+	vec3 direction = vertex.position - light.position;
 	float distance = length(direction);
 
 	direction = normalize(direction);
@@ -126,7 +131,7 @@ vec4 calculatePointLight(PointLight light, vec3 normal)
 vec4 calculateSpotLight(SpotLight light, vec3 normal)
 {
 
-	vec3 direction = normalize(position1 - light.base.position);
+	vec3 direction = normalize(vertex.position - light.base.position);
 	float factor = dot(direction, light.direction);
 
 	vec4 color = vec4(0, 0, 0, 0);
@@ -146,81 +151,81 @@ void main()
 {
 	
 	vec4 outputColor = baseColor;
-	vec4 outputTexture = texture(activeTexture, textureCoordinates1);
+	vec4 outputTexture = texture(activeTexture, vertex.textureCoordinates);
 
 	vec4 light = vec4(ambientLight, ambientLight, ambientLight, 1);
 
 	if(directionalLights[0].base.intensity > 0)
-		light += calculateDirectionalLight(directionalLights[0], normal1);
+		light += calculateDirectionalLight(directionalLights[0], vertex.normal);
 
 	if(directionalLights[1].base.intensity > 0)
-		light += calculateDirectionalLight(directionalLights[1], normal1);
+		light += calculateDirectionalLight(directionalLights[1], vertex.normal);
 
 	if(directionalLights[2].base.intensity > 0)
-		light += calculateDirectionalLight(directionalLights[2], normal1);
+		light += calculateDirectionalLight(directionalLights[2], vertex.normal);
 
 	if(directionalLights[3].base.intensity > 0)
-		light += calculateDirectionalLight(directionalLights[3], normal1);
+		light += calculateDirectionalLight(directionalLights[3], vertex.normal);
 
 	if(directionalLights[4].base.intensity > 0)
-		light += calculateDirectionalLight(directionalLights[4], normal1);
+		light += calculateDirectionalLight(directionalLights[4], vertex.normal);
 
 	if(directionalLights[5].base.intensity > 0)
-		light += calculateDirectionalLight(directionalLights[5], normal1);
+		light += calculateDirectionalLight(directionalLights[5], vertex.normal);
 
 	if(directionalLights[6].base.intensity > 0)
-		light += calculateDirectionalLight(directionalLights[6], normal1);
+		light += calculateDirectionalLight(directionalLights[6], vertex.normal);
 
 	if(directionalLights[7].base.intensity > 0)
-		light += calculateDirectionalLight(directionalLights[7], normal1);
+		light += calculateDirectionalLight(directionalLights[7], vertex.normal);
 
 	if(pointLights[0].base.intensity > 0)
-		light += calculatePointLight(pointLights[0], normal1);
+		light += calculatePointLight(pointLights[0], vertex.normal);
 
 	if(pointLights[1].base.intensity > 0)
-		light += calculatePointLight(pointLights[1], normal1);
+		light += calculatePointLight(pointLights[1], vertex.normal);
 
 	if(pointLights[2].base.intensity > 0)
-		light += calculatePointLight(pointLights[2], normal1);
+		light += calculatePointLight(pointLights[2], vertex.normal);
 
 	if(pointLights[3].base.intensity > 0)
-		light += calculatePointLight(pointLights[3], normal1);
+		light += calculatePointLight(pointLights[3], vertex.normal);
 
 	if(pointLights[4].base.intensity > 0)
-		light += calculatePointLight(pointLights[4], normal1);
+		light += calculatePointLight(pointLights[4], vertex.normal);
 
 	if(pointLights[5].base.intensity > 0)
-		light += calculatePointLight(pointLights[5], normal1);
+		light += calculatePointLight(pointLights[5], vertex.normal);
 
 	if(pointLights[6].base.intensity > 0)
-		light += calculatePointLight(pointLights[6], normal1);
+		light += calculatePointLight(pointLights[6], vertex.normal);
 
 	if(pointLights[7].base.intensity > 0)
-		light += calculatePointLight(pointLights[7], normal1);
+		light += calculatePointLight(pointLights[7], vertex.normal);
 
 	if(spotLights[0].base.base.intensity > 0)
-		light += calculateSpotLight(spotLights[0], normal1);
+		light += calculateSpotLight(spotLights[0], vertex.normal);
 
 	if(spotLights[1].base.base.intensity > 0)
-		light += calculateSpotLight(spotLights[1], normal1);
+		light += calculateSpotLight(spotLights[1], vertex.normal);
 
 	if(spotLights[2].base.base.intensity > 0)
-		light += calculateSpotLight(spotLights[2], normal1);
+		light += calculateSpotLight(spotLights[2], vertex.normal);
 
 	if(spotLights[3].base.base.intensity > 0)
-		light += calculateSpotLight(spotLights[3], normal1);
+		light += calculateSpotLight(spotLights[3], vertex.normal);
 
 	if(spotLights[4].base.base.intensity > 0)
-		light += calculateSpotLight(spotLights[4], normal1);
+		light += calculateSpotLight(spotLights[4], vertex.normal);
 
 	if(spotLights[5].base.base.intensity > 0)
-		light += calculateSpotLight(spotLights[5], normal1);
+		light += calculateSpotLight(spotLights[5], vertex.normal);
 
 	if(spotLights[6].base.base.intensity > 0)
-		light += calculateSpotLight(spotLights[6], normal1);
+		light += calculateSpotLight(spotLights[6], vertex.normal);
 
 	if(spotLights[7].base.base.intensity > 0)
-		light += calculateSpotLight(spotLights[7], normal1);
+		light += calculateSpotLight(spotLights[7], vertex.normal);
 
 	if(useTexture == 1)
 		color = light * outputColor * outputTexture;

@@ -1,7 +1,7 @@
 using System;
 
 using STBEngine.Core;
-using STBEngine.Physics.Colliders;
+using STBEngine.Physics.Collision;
 
 namespace STBEngine.Physics
 {
@@ -24,15 +24,38 @@ namespace STBEngine.Physics
 
 			entity.Simulate();
 
-			entity.Collider.Transform(entity.Transformation);
-
-			foreach(Entity otherEntity in CoreEngine.Instance.Entities)
+			foreach(Collider collider in entity.Colliders)
 			{
 
-				Intersection intersection = entity.Collider.Intersect(otherEntity.Collider);
+				collider.Transform(entity.Transformation);
 
-				Console.WriteLine(intersection.Intersecting);
-				Console.WriteLine(intersection.Distance);
+				foreach(Entity otherEntity in CoreEngine.Instance.Entities)
+				{
+
+					if(otherEntity == entity)
+					{
+
+						continue;
+
+					}
+
+					foreach(Collider otherCollider in otherEntity.Colliders)
+					{
+
+						otherCollider.Transform(otherEntity.Transformation);
+
+						Intersection intersection = collider.Intersect(otherCollider);
+
+						if(intersection.Intersecting)
+						{
+
+							collider.Response(entity, intersection);
+
+						}
+
+					}
+
+				}
 
 			}
 

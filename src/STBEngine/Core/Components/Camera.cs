@@ -105,7 +105,7 @@ namespace STBEngine.Core.Components
 			get
 			{
 
-				return Vector3.TransformVector(new Vector3(-1f, 0f, 0f), Matrix4.Transpose(Matrix4.CreateFromQuaternion(parent.Transformation.Rotation)));
+				return Vector3.TransformVector(new Vector3(-1f, 0f, 0f), Matrix4.Transpose(Matrix4.CreateFromQuaternion(parent.Transformation.Rotation))).Normalized();
 
 			}
 
@@ -117,7 +117,7 @@ namespace STBEngine.Core.Components
 			get
 			{
 
-				return Vector3.TransformVector(new Vector3(1f, 0f, 0f), Matrix4.Transpose(Matrix4.CreateFromQuaternion(parent.Transformation.Rotation)));
+				return Vector3.TransformVector(new Vector3(1f, 0f, 0f), Matrix4.Transpose(Matrix4.CreateFromQuaternion(parent.Transformation.Rotation))).Normalized();
 
 			}
 
@@ -129,7 +129,7 @@ namespace STBEngine.Core.Components
 			get
 			{
 
-				return Vector3.TransformVector(new Vector3(0f, -1f, 0f), Matrix4.Transpose(Matrix4.CreateFromQuaternion(parent.Transformation.Rotation)));
+				return Vector3.TransformVector(new Vector3(0f, -1f, 0f), Matrix4.Transpose(Matrix4.CreateFromQuaternion(parent.Transformation.Rotation))).Normalized();
 
 			}
 
@@ -141,7 +141,7 @@ namespace STBEngine.Core.Components
 			get
 			{
 
-				return Vector3.TransformVector(new Vector3(0f, 1f, 0f), Matrix4.Transpose(Matrix4.CreateFromQuaternion(parent.Transformation.Rotation)));
+				return Vector3.TransformVector(new Vector3(0f, 1f, 0f), Matrix4.Transpose(Matrix4.CreateFromQuaternion(parent.Transformation.Rotation))).Normalized();
 
 			}
 
@@ -153,7 +153,7 @@ namespace STBEngine.Core.Components
 			get
 			{
 
-				return Vector3.TransformVector(new Vector3(0f, 0f, -1f), Matrix4.Transpose(Matrix4.CreateFromQuaternion(parent.Transformation.Rotation)));
+				return Vector3.TransformVector(new Vector3(0f, 0f, -1f), Matrix4.Transpose(Matrix4.CreateFromQuaternion(parent.Transformation.Rotation))).Normalized();
 
 			}
 
@@ -165,7 +165,7 @@ namespace STBEngine.Core.Components
 			get
 			{
 
-				return Vector3.TransformVector(new Vector3(0f, 0f, 1f), Matrix4.Transpose(Matrix4.CreateFromQuaternion(parent.Transformation.Rotation)));
+				return Vector3.TransformVector(new Vector3(0f, 0f, 1f), Matrix4.Transpose(Matrix4.CreateFromQuaternion(parent.Transformation.Rotation))).Normalized();
 
 			}
 
