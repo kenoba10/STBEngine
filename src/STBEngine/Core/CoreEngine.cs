@@ -85,6 +85,8 @@ namespace STBEngine.Core
 
 			}
 
+			renderingEngine.Render();
+
 		}
 
 		public void Terminate()

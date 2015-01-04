@@ -49,6 +49,26 @@ namespace STBEngine.Rendering
 
 		}
 
+		public void LoadTexture(IntPtr data, int width, int height)
+		{
+
+			texture = GL.GenTexture();
+
+			GL.BindTexture(TextureTarget.Texture2D, texture);
+
+			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (float) TextureMinFilter.Linear);
+			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (float) TextureMagFilter.Linear);
+			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (float) TextureWrapMode.Repeat);
+			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (float) TextureWrapMode.Repeat);
+
+			GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, width, height, 0, PixelFormat.Bgra, PixelType.UnsignedByte, data);
+
+			GL.BindTexture(TextureTarget.Texture2D, 0);
+
+			initialized = true;
+
+		}
+
 		public void Bind()
 		{
 

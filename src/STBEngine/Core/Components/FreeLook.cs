@@ -3,6 +3,8 @@
 using OpenTK;
 using OpenTK.Input;
 
+using STBEngine.Core.Event;
+
 namespace STBEngine.Core.Components
 {
 
@@ -12,6 +14,7 @@ namespace STBEngine.Core.Components
 		private float sensitivity;
 
 		private bool locked;
+		private bool guiOpened;
 
 		public FreeLook()
 		{
@@ -19,6 +22,14 @@ namespace STBEngine.Core.Components
 			sensitivity = 0.25f;
 
 			locked = false;
+			guiOpened = false;
+
+		}
+
+		public override void Initialize()
+		{
+
+			CoreEngine.Instance.EventHandler.Subscribe(OnEvent);
 
 		}
 
@@ -45,7 +56,7 @@ namespace STBEngine.Core.Components
 
 			}
 
-			if(locked)
+			if(locked && !guiOpened)
 			{
 
 				Vector2 deltaPosition = Input.GetMousePosition();
@@ -73,6 +84,31 @@ namespace STBEngine.Core.Components
 					Input.SetMousePosition();
 
 				}
+
+			}
+
+		}
+
+		public override void Terminate()
+		{
+
+			CoreEngine.Instance.EventHandler.Unsubscribe(OnEvent);
+
+		}
+
+		public void OnEvent(STBEventArgs e)
+		{
+
+			if(e.Event == "openGUI")
+			{
+
+				guiOpened = true;
+
+			}
+			else if(e.Event == "closeGUI")
+			{
+
+				guiOpened = false;
 
 			}
 

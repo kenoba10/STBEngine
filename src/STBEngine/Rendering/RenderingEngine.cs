@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 
 using OpenTK;
+using OpenTK.Input;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 
@@ -16,6 +17,10 @@ namespace STBEngine.Rendering
 
 		private Camera camera;
 
+		private GUI openGUI;
+
+		private List<GUI> guis;
+
 		private List<DirectionalLight> directionalLights;
 		private List<PointLight> pointLights;
 		private List<SpotLight> spotLights;
@@ -24,6 +29,8 @@ namespace STBEngine.Rendering
 		{
 
 			camera = new Camera();
+
+			guis = new List<GUI>();
 
 			directionalLights = new List<DirectionalLight>();
 			pointLights = new List<PointLight>();
@@ -43,6 +50,58 @@ namespace STBEngine.Rendering
 
 		public void Update()
 		{
+
+			if(openGUI != null)
+			{
+
+				openGUI.Update();
+
+				if(Input.GetKeyDown(Key.Escape))
+				{
+
+					CloseGUI();
+
+				}
+
+			}
+
+			foreach(GUI gui in guis)
+			{
+
+				gui.Update();
+
+			}
+
+		}
+
+		public void Render()
+		{
+
+			float depthIndex = 0.0003f;
+
+			if(openGUI != null)
+			{
+
+				openGUI.DrawBackground();
+				openGUI.DrawForeground(0.0002f);
+
+			}
+
+			foreach(GUI gui in guis)
+			{
+
+				gui.DrawBackground();
+
+			}
+
+			foreach(GUI gui in guis)
+			{
+
+				gui.DrawForeground(depthIndex);
+
+				depthIndex += 0.0064f;
+
+			}
 
 		}
 
@@ -134,11 +193,14 @@ namespace STBEngine.Rendering
 			GL.Enable(EnableCap.CullFace);
 			GL.Enable(EnableCap.DepthTest);
 			GL.Enable(EnableCap.DepthClamp);
+			GL.Enable(EnableCap.Blend);
 			
 			GL.FrontFace(FrontFaceDirection.Cw);
 			GL.CullFace(CullFaceMode.Back);
 
 			GL.DepthFunc(DepthFunction.Less);
+
+			GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 
 		}
 
@@ -190,6 +252,46 @@ namespace STBEngine.Rendering
 			shader.SetUniform("spotLights[" + index + "].base.range", light.Base.Range);
 			shader.SetUniform("spotLights[" + index + "].direction", light.Direction);
 			shader.SetUniform("spotLights[" + index + "].cutoff", light.CutOff);
+
+		}
+
+		public void OpenGUI(GUI gui)
+		{
+
+			CoreEngine.Instance.EventHandler.Execute("openGUI");
+
+			openGUI = gui;
+
+			openGUI.Initialize();
+
+		}
+
+		public void CloseGUI()
+		{
+
+			openGUI.Terminate();
+
+			openGUI = null;
+
+			CoreEngine.Instance.EventHandler.Execute("closeGUI");
+
+		}
+
+		public void AddGUI(GUI gui)
+		{
+
+			gui.Initialize();
+
+			guis.Add(gui);
+
+		}
+
+		public void RemoveGUI(GUI gui)
+		{
+
+			guis.Remove(gui);
+
+			gui.Terminate();
 
 		}
 
@@ -248,6 +350,18 @@ namespace STBEngine.Rendering
 			{
 
 				this.camera = value;
+
+			}
+
+		}
+
+		public List<GUI> GUIs
+		{
+
+			get
+			{
+
+				return guis;
 
 			}
 

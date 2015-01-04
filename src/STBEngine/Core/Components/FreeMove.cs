@@ -3,54 +3,102 @@
 using OpenTK;
 using OpenTK.Input;
 
+using STBEngine.Core.Event;
+
 namespace STBEngine.Core.Components
 {
 
 	public class FreeMove : Component
 	{
 
+		private bool guiOpened;
+
+		public FreeMove()
+		{
+
+			guiOpened = false;
+
+		}
+
+		public override void Initialize()
+		{
+
+			CoreEngine.Instance.EventHandler.Subscribe(OnEvent);
+
+		}
+
 		public override void Simulate()
 		{
 
-			if(Input.GetKey(Key.W))
+			if(!guiOpened)
 			{
 
-				parent.Velocity += CoreEngine.Instance.RenderingEngine.Camera.Forward;
+				if(Input.GetKey(Key.W))
+				{
+
+					parent.Velocity += CoreEngine.Instance.RenderingEngine.Camera.Forward;
+
+				}
+
+				if(Input.GetKey(Key.S))
+				{
+
+					parent.Velocity += CoreEngine.Instance.RenderingEngine.Camera.Back;
+
+				}
+
+				if(Input.GetKey(Key.A))
+				{
+
+					parent.Velocity += CoreEngine.Instance.RenderingEngine.Camera.Left;
+
+				}
+
+				if(Input.GetKey(Key.D))
+				{
+
+					parent.Velocity += CoreEngine.Instance.RenderingEngine.Camera.Right;
+
+				}
+
+				if(Input.GetKey(Key.LShift))
+				{
+
+					parent.Velocity += CoreEngine.Instance.RenderingEngine.Camera.Down;
+
+				}
+
+				if(Input.GetKey(Key.Space))
+				{
+
+					parent.Velocity += CoreEngine.Instance.RenderingEngine.Camera.Up;
+
+				}
 
 			}
 
-			if(Input.GetKey(Key.S))
+		}
+
+		public override void Terminate()
+		{
+
+			CoreEngine.Instance.EventHandler.Unsubscribe(OnEvent);
+
+		}
+
+		public void OnEvent(STBEventArgs e)
+		{
+
+			if(e.Event == "openGUI")
 			{
 
-				parent.Velocity += CoreEngine.Instance.RenderingEngine.Camera.Back;
+				guiOpened = true;
 
 			}
-
-			if(Input.GetKey(Key.A))
+			else if(e.Event == "closeGUI")
 			{
 
-				parent.Velocity += CoreEngine.Instance.RenderingEngine.Camera.Left;
-
-			}
-
-			if(Input.GetKey(Key.D))
-			{
-
-				parent.Velocity += CoreEngine.Instance.RenderingEngine.Camera.Right;
-
-			}
-
-			if(Input.GetKey(Key.LShift))
-			{
-
-				parent.Velocity += CoreEngine.Instance.RenderingEngine.Camera.Down;
-
-			}
-
-			if(Input.GetKey(Key.Space))
-			{
-
-				parent.Velocity += CoreEngine.Instance.RenderingEngine.Camera.Up;
+				guiOpened = false;
 
 			}
 

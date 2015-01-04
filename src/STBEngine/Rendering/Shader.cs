@@ -17,6 +17,9 @@ namespace STBEngine.Rendering
 		public static readonly string PHONG_VERTEX_SHADER = IOUtils.ReadFile("STBEngine.res.shaders.phongVS.glsl", false);
 		public static readonly string PHONG_GEOMETRY_SHADER = IOUtils.ReadFile("STBEngine.res.shaders.phongGS.glsl", false);
 		public static readonly string PHONG_FRAGMENT_SHADER = IOUtils.ReadFile("STBEngine.res.shaders.phongFS.glsl", false);
+		public static readonly string GUI_VERTEX_SHADER = IOUtils.ReadFile("STBEngine.res.shaders.guiVS.glsl", false);
+		public static readonly string GUI_GEOMETRY_SHADER = IOUtils.ReadFile("STBEngine.res.shaders.guiGS.glsl", false);
+		public static readonly string GUI_FRAGMENT_SHADER = IOUtils.ReadFile("STBEngine.res.shaders.guiFS.glsl", false);
 
 		private int program;
 
@@ -30,7 +33,7 @@ namespace STBEngine.Rendering
 		public void AddVertexShader(string source)
 		{
 
-			if(program != 1)
+			if(program == 0)
 				program = GL.CreateProgram();
 
 			int shader = GL.CreateShader(ShaderType.VertexShader);
@@ -56,7 +59,7 @@ namespace STBEngine.Rendering
 		public void AddGeometryShader(string source)
 		{
 
-			if(program != 1)
+			if(program == 0)
 				program = GL.CreateProgram();
 
 			int shader = GL.CreateShader(ShaderType.GeometryShader);
@@ -83,7 +86,7 @@ namespace STBEngine.Rendering
 		public void AddFragmentShader(string source)
 		{
 
-			if(program != 1)
+			if(program == 0)
 				program = GL.CreateProgram();
 
 			int shader = GL.CreateShader(ShaderType.FragmentShader);
