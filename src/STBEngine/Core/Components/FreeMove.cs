@@ -23,7 +23,7 @@ namespace STBEngine.Core.Components
 		public override void Initialize()
 		{
 
-			CoreEngine.Instance.EventHandler.Subscribe(OnEvent);
+			parent.Engine.EventHandler.Subscribe(OnEvent);
 
 		}
 
@@ -36,42 +36,42 @@ namespace STBEngine.Core.Components
 				if(Input.GetKey(Key.W))
 				{
 
-					parent.Velocity += CoreEngine.Instance.RenderingEngine.Camera.Forward;
+					parent.Velocity += parent.Engine.RenderingEngine.Camera.Forward;
 
 				}
 
 				if(Input.GetKey(Key.S))
 				{
 
-					parent.Velocity += CoreEngine.Instance.RenderingEngine.Camera.Back;
+					parent.Velocity += parent.Engine.RenderingEngine.Camera.Back;
 
 				}
 
 				if(Input.GetKey(Key.A))
 				{
 
-					parent.Velocity += CoreEngine.Instance.RenderingEngine.Camera.Left;
+					parent.Velocity += parent.Engine.RenderingEngine.Camera.Left;
 
 				}
 
 				if(Input.GetKey(Key.D))
 				{
 
-					parent.Velocity += CoreEngine.Instance.RenderingEngine.Camera.Right;
+					parent.Velocity += parent.Engine.RenderingEngine.Camera.Right;
 
 				}
 
 				if(Input.GetKey(Key.LShift))
 				{
 
-					parent.Velocity += CoreEngine.Instance.RenderingEngine.Camera.Down;
+					parent.Velocity += parent.Engine.RenderingEngine.Camera.Down;
 
 				}
 
 				if(Input.GetKey(Key.Space))
 				{
 
-					parent.Velocity += CoreEngine.Instance.RenderingEngine.Camera.Up;
+					parent.Velocity += parent.Engine.RenderingEngine.Camera.Up;
 
 				}
 
@@ -82,7 +82,7 @@ namespace STBEngine.Core.Components
 		public override void Terminate()
 		{
 
-			CoreEngine.Instance.EventHandler.Unsubscribe(OnEvent);
+			parent.Engine.EventHandler.Unsubscribe(OnEvent);
 
 		}
 

@@ -11,10 +11,14 @@ namespace STBEngine.Core
 	public class Window : GameWindow
 	{
 
+		private CoreEngine engine;
+
 		private AudioContext AC;
 
-		public Window(string title) : base(1080, 720, GraphicsMode.Default, title, GameWindowFlags.Default, DisplayDevice.Default, 3, 3, GraphicsContextFlags.Default)
+		public Window(string title, CoreEngine engine) : base(1080, 720, GraphicsMode.Default, title, GameWindowFlags.Default, DisplayDevice.Default, 3, 3, GraphicsContextFlags.Default)
 		{
+
+			this.engine = engine;
 
 			AC = new AudioContext();
 
@@ -27,7 +31,7 @@ namespace STBEngine.Core
 
 			AC.MakeCurrent();
 
-			CoreEngine.Instance.Initialize();
+			engine.Initialize();
 
 		}
 
@@ -38,7 +42,7 @@ namespace STBEngine.Core
 
 			Input.Update(this);
 
-			CoreEngine.Instance.Update();
+			engine.Update();
 
 		}
 
@@ -47,9 +51,9 @@ namespace STBEngine.Core
 
 			base.OnRenderFrame(e);
 
-			CoreEngine.Instance.RenderingEngine.ClearScreen();
+			engine.RenderingEngine.ClearScreen();
 
-			CoreEngine.Instance.Render();
+			engine.Render();
 
 			SwapBuffers();
 
@@ -60,7 +64,7 @@ namespace STBEngine.Core
 
 			base.OnUnload(e);
 
-			CoreEngine.Instance.Terminate();
+			engine.Terminate();
 
 			AC.Dispose();
 
@@ -71,7 +75,7 @@ namespace STBEngine.Core
 
 			base.OnResize(e);
 
-			CoreEngine.Instance.RenderingEngine.ResizeScreen((uint) Width, (uint) Height);
+			engine.RenderingEngine.ResizeScreen((uint) Width, (uint) Height);
 
 		}
 
@@ -80,7 +84,7 @@ namespace STBEngine.Core
 
 			base.OnKeyDown(e);
 
-			CoreEngine.Instance.EventHandler.Execute("Key" + e.Key.ToString() + "Down");
+			engine.EventHandler.Execute("Key" + e.Key.ToString() + "Down");
 
 		}
 
@@ -89,7 +93,7 @@ namespace STBEngine.Core
 
 			base.OnKeyPress(e);
 
-			CoreEngine.Instance.EventHandler.Execute("Key" + e.KeyChar + "Press");
+			engine.EventHandler.Execute("Key" + e.KeyChar + "Press");
 
 		}
 
@@ -98,7 +102,7 @@ namespace STBEngine.Core
 
 			base.OnKeyUp(e);
 
-			CoreEngine.Instance.EventHandler.Execute("Key" + e.Key.ToString() + "Up");
+			engine.EventHandler.Execute("Key" + e.Key.ToString() + "Up");
 
 		}
 
@@ -107,7 +111,7 @@ namespace STBEngine.Core
 
 			base.OnMouseDown(e);
 
-			CoreEngine.Instance.EventHandler.Execute("MouseButton" + e.Button.ToString() + "Down");
+			engine.EventHandler.Execute("MouseButton" + e.Button.ToString() + "Down");
 
 		}
 
@@ -116,7 +120,7 @@ namespace STBEngine.Core
 
 			base.OnMouseUp(e);
 
-			CoreEngine.Instance.EventHandler.Execute("MouseButton" + e.Button.ToString() + "Up");
+			engine.EventHandler.Execute("MouseButton" + e.Button.ToString() + "Up");
 
 		}
 

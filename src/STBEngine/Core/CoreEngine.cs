@@ -15,8 +15,6 @@ namespace STBEngine.Core
 	public class CoreEngine
 	{
 
-		private static readonly CoreEngine instance = new CoreEngine();
-
 		private IGame game;
 
 		private List<Entity> entities;
@@ -26,15 +24,15 @@ namespace STBEngine.Core
 		private RenderingEngine renderingEngine;
 		private PhysicsEngine physicsEngine;
 
-		private CoreEngine()
+		public CoreEngine()
 		{
 
 			entities = new List<Entity>();
 
 			eventHandler = new STBEventManager();
 
-			renderingEngine = new RenderingEngine();
-			physicsEngine = new PhysicsEngine();
+			renderingEngine = new RenderingEngine(this);
+			physicsEngine = new PhysicsEngine(this);
 
 		}
 
@@ -66,7 +64,6 @@ namespace STBEngine.Core
 			foreach(Entity entity in entities)
 			{
 
-				renderingEngine.UpdateUniforms(entity);
 				physicsEngine.Simulate(entity);
 
 				entity.Update();
@@ -111,7 +108,7 @@ namespace STBEngine.Core
 
 			this.game = game;
 
-			using(GameWindow window = new Window(game.Title))
+			using(GameWindow window = new Window(game.Title, this))
 			{
 
 				window.Run(ups, fps);
@@ -123,7 +120,7 @@ namespace STBEngine.Core
 		public void AddEntity(Entity entity)
 		{
 
-			entity.Initialize();
+			entity.Initialize(this);
 
 			entities.Add(entity);
 
@@ -193,18 +190,6 @@ namespace STBEngine.Core
 			{
 
 				return physicsEngine;
-
-			}
-
-		}
-
-		public static CoreEngine Instance
-		{
-
-			get
-			{
-
-				return instance;
 
 			}
 

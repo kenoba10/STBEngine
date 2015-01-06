@@ -11,14 +11,12 @@ out Vertex
 
 } vertex;
 
-uniform float depth;
-
 uniform mat4 projection;
 
 void main()
 {
 	
-	gl_Position = projection * vec4(position, depth, 1);
+	gl_Position = projection * vec4(position, 1, 1);
 	
 	vertex.position = position;
 	vertex.textureCoordinates = textureCoordinates;

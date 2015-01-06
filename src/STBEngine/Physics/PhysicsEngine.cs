@@ -9,6 +9,15 @@ namespace STBEngine.Physics
 	public class PhysicsEngine
 	{
 
+		private CoreEngine engine;
+
+		public PhysicsEngine(CoreEngine engine)
+		{
+
+			this.engine = engine;
+
+		}
+
 		public void Initialize()
 		{
 
@@ -29,7 +38,7 @@ namespace STBEngine.Physics
 
 				collider.Transform(entity.Transformation);
 
-				foreach(Entity otherEntity in CoreEngine.Instance.Entities)
+				foreach(Entity otherEntity in engine.Entities)
 				{
 
 					if(otherEntity == entity)

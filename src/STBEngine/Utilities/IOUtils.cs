@@ -34,6 +34,40 @@ namespace STBEngine.Utilities
 
 		}
 
+		public static string LoadShader(string name)
+		{
+
+			string shader = "";
+
+			using(StreamReader reader = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("STBEngine.res.shaders." + name)))
+			{
+
+				string line;
+
+				while((line = reader.ReadLine()) != null)
+				{
+
+					if(line.StartsWith("#include"))
+					{
+
+						shader += IOUtils.LoadShader(line.Substring(10, line.Length - 11)) + '\n';
+
+					}
+					else
+					{
+
+						shader += line + '\n';
+
+					}
+
+				}
+
+			}
+
+			return shader;
+
+		}
+
 		public static IntPtr LoadTexture(Stream stream, out int width, out int height)
 		{
 

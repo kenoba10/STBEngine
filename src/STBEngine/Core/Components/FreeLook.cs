@@ -29,7 +29,7 @@ namespace STBEngine.Core.Components
 		public override void Initialize()
 		{
 
-			CoreEngine.Instance.EventHandler.Subscribe(OnEvent);
+			parent.Engine.EventHandler.Subscribe(OnEvent);
 
 		}
 
@@ -67,7 +67,7 @@ namespace STBEngine.Core.Components
 				if(rotateX)
 				{
 
-					parent.Transformation.Rotate(CoreEngine.Instance.RenderingEngine.Camera.Right, deltaPosition.Y * sensitivity);
+					parent.Transformation.Rotate(parent.Engine.RenderingEngine.Camera.Right, deltaPosition.Y * sensitivity);
 
 				}
 
@@ -92,7 +92,7 @@ namespace STBEngine.Core.Components
 		public override void Terminate()
 		{
 
-			CoreEngine.Instance.EventHandler.Unsubscribe(OnEvent);
+			parent.Engine.EventHandler.Unsubscribe(OnEvent);
 
 		}
 

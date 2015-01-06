@@ -8,12 +8,15 @@ using OpenTK.Graphics.OpenGL;
 
 using STBEngine.Core;
 using STBEngine.Core.Components;
+using STBEngine.Rendering.Shaders;
 
 namespace STBEngine.Rendering
 {
 
 	public class RenderingEngine
 	{
+
+		private CoreEngine engine;
 
 		private Camera camera;
 
@@ -25,8 +28,10 @@ namespace STBEngine.Rendering
 		private List<PointLight> pointLights;
 		private List<SpotLight> spotLights;
 
-		public RenderingEngine()
+		public RenderingEngine(CoreEngine engine)
 		{
+
+			this.engine = engine;
 
 			camera = new Camera();
 
@@ -77,29 +82,17 @@ namespace STBEngine.Rendering
 		public void Render()
 		{
 
-			float depthIndex = 0.0003f;
-
 			if(openGUI != null)
 			{
 
-				openGUI.DrawBackground();
-				openGUI.DrawForeground(0.0002f);
+				openGUI.Render();
 
 			}
 
 			foreach(GUI gui in guis)
 			{
 
-				gui.DrawBackground();
-
-			}
-
-			foreach(GUI gui in guis)
-			{
-
-				gui.DrawForeground(depthIndex);
-
-				depthIndex += 0.0064f;
+				gui.Render();
 
 			}
 
@@ -110,55 +103,12 @@ namespace STBEngine.Rendering
 
 		}
 
-		public void UpdateUniforms(Entity entity)
-		{
-
-			Shader shader = entity.Shader;
-
-			shader.Bind();
-
-			shader.SetUniform("projection", CoreEngine.Instance.RenderingEngine.Camera.Projection);
-			shader.SetUniform("transformation", entity.Transformation.GetTransformation());
-
-			shader.SetUniform("eyePosition", CoreEngine.Instance.RenderingEngine.Camera.Parent.Transformation.Position);
-
-			shader.SetUniform("useTexture", entity.Material.Texture.Initialized ? 1 : 0);
-			shader.SetUniform("baseColor", new Vector4(entity.Material.Color.R, entity.Material.Color.G, entity.Material.Color.B, entity.Material.Color.A));
-
-			shader.SetUniform("ambientLight", entity.Material.AmbientLight);
-
-			for(uint i = 0; i < directionalLights.Count; i++)
-			{
-
-				SetUniformDirectionalLight(i, directionalLights[(int) i], shader);
-
-			}
-
-			for(uint i = 0; i < pointLights.Count; i++)
-			{
-
-				SetUniformPointLight(i, pointLights[(int) i], shader);
-
-			}
-
-			for(uint i = 0; i < spotLights.Count; i++)
-			{
-
-				SetUniformSpotLight(i, spotLights[(int) i], shader);
-
-			}
-
-			shader.SetUniform("specularIntensity", entity.Material.SpecularIntensity);
-			shader.SetUniform("specularExponent", entity.Material.SpecularExponent);
-
-			shader.UnBind();
-
-		}
-
 		public void Render(Entity entity)
 		{
 
-			entity.Shader.Bind();
+			BasicShader.Instance.Bind();
+
+			BasicShader.Instance.UpdateUniforms(engine, entity);
 
 			entity.Material.Texture.Bind();
 
@@ -166,7 +116,54 @@ namespace STBEngine.Rendering
 
 			entity.Material.Texture.UnBind();
 
-			entity.Shader.UnBind();
+			BasicShader.Instance.UnBind();
+
+			GL.DepthMask(false);
+			GL.DepthFunc(DepthFunction.Equal);
+			GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.One);
+
+			foreach(DirectionalLight light in directionalLights)
+			{
+
+				DirectionalLightShader.Instance.Bind();
+
+				DirectionalLightShader.Instance.UpdateUniforms(engine, entity, light);
+
+				entity.Mesh.Draw();
+
+				DirectionalLightShader.Instance.UnBind();
+
+			}
+
+			foreach(PointLight light in pointLights)
+			{
+
+				PointLightShader.Instance.Bind();
+
+				PointLightShader.Instance.UpdateUniforms(engine, entity, light);
+
+				entity.Mesh.Draw();
+
+				PointLightShader.Instance.UnBind();
+
+			}
+
+			foreach(SpotLight light in spotLights)
+			{
+
+				SpotLightShader.Instance.Bind();
+
+				SpotLightShader.Instance.UpdateUniforms(engine, entity, light);
+
+				entity.Mesh.Draw();
+
+				SpotLightShader.Instance.UnBind();
+
+			}
+
+			GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+			GL.DepthFunc(DepthFunction.Less);
+			GL.DepthMask(true);
 
 		}
 
@@ -218,47 +215,12 @@ namespace STBEngine.Rendering
 
 		}
 
-		private void SetUniformDirectionalLight(uint index, DirectionalLight light, Shader shader)
-		{
-
-			shader.SetUniform("directionalLights[" + index + "].base.color", new Vector4(light.Base.Color.R, light.Base.Color.G, light.Base.Color.B, light.Base.Color.A));
-			shader.SetUniform("directionalLights[" + index + "].base.intensity", light.Base.Intensity);
-			shader.SetUniform("directionalLights[" + index + "].direction", light.Direction);
-
-		}
-
-		private void SetUniformPointLight(uint index, PointLight light, Shader shader)
-		{
-
-			shader.SetUniform("pointLights[" + index + "].base.color", new Vector4(light.Base.Color.R, light.Base.Color.G, light.Base.Color.B, light.Base.Color.A));
-			shader.SetUniform("pointLights[" + index + "].base.intensity", light.Base.Intensity);
-			shader.SetUniform("pointLights[" + index + "].attenuation.constant", light.Attenuation.Constant);
-			shader.SetUniform("pointLights[" + index + "].attenuation.linear", light.Attenuation.Linear);
-			shader.SetUniform("pointLights[" + index + "].attenuation.exponent", light.Attenuation.Exponent);
-			shader.SetUniform("pointLights[" + index + "].position", light.Position);
-			shader.SetUniform("pointLights[" + index + "].range", light.Range);
-
-		}
-
-		private void SetUniformSpotLight(uint index, SpotLight light, Shader shader)
-		{
-
-			shader.SetUniform("spotLights[" + index + "].base.base.color", new Vector4(light.Base.Base.Color.R, light.Base.Base.Color.G, light.Base.Base.Color.B, light.Base.Base.Color.A));
-			shader.SetUniform("spotLights[" + index + "].base.base.intensity", light.Base.Base.Intensity);
-			shader.SetUniform("spotLights[" + index + "].base.attenuation.constant", light.Base.Attenuation.Constant);
-			shader.SetUniform("spotLights[" + index + "].base.attenuation.linear", light.Base.Attenuation.Linear);
-			shader.SetUniform("spotLights[" + index + "].base.attenuation.exponent", light.Base.Attenuation.Exponent);
-			shader.SetUniform("spotLights[" + index + "].base.position", light.Base.Position);
-			shader.SetUniform("spotLights[" + index + "].base.range", light.Base.Range);
-			shader.SetUniform("spotLights[" + index + "].direction", light.Direction);
-			shader.SetUniform("spotLights[" + index + "].cutoff", light.CutOff);
-
-		}
-
 		public void OpenGUI(GUI gui)
 		{
 
-			CoreEngine.Instance.EventHandler.Execute("openGUI");
+			CloseGUI();
+
+			engine.EventHandler.Execute("openGUI");
 
 			openGUI = gui;
 
@@ -269,11 +231,16 @@ namespace STBEngine.Rendering
 		public void CloseGUI()
 		{
 
-			openGUI.Terminate();
+			if(openGUI != null)
+			{
 
-			openGUI = null;
+				openGUI.Terminate();
 
-			CoreEngine.Instance.EventHandler.Execute("closeGUI");
+				openGUI = null;
+
+				engine.EventHandler.Execute("closeGUI");
+
+			}
 
 		}
 

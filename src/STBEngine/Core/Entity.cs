@@ -13,12 +13,13 @@ namespace STBEngine.Core
 	public class Entity
 	{
 
+		private CoreEngine engine;
+
 		private List<Component> components;
 
 		private Transformation transformation;
 		private Material material;
 		private Mesh mesh;
-		private Shader shader;
 		private List<Collider> colliders;
 		private Vector3 velocity;
 		private float distance;
@@ -29,7 +30,6 @@ namespace STBEngine.Core
 			transformation = new Transformation();
 			material = new Material();
 			mesh = new Mesh();
-			shader = new Shader();
 			colliders = new List<Collider>();
 			velocity = new Vector3(0f, 0f, 0f);
 			distance = 0.5f;
@@ -38,8 +38,10 @@ namespace STBEngine.Core
 
 		}
 
-		public void Initialize()
+		public void Initialize(CoreEngine engine)
 		{
+
+			this.engine = engine;
 
 		}
 
@@ -84,7 +86,6 @@ namespace STBEngine.Core
 
 			}
 
-			shader.Delete();
 			mesh.RemoveVertices();
 			material.Terminate();
 
@@ -107,6 +108,18 @@ namespace STBEngine.Core
 			components.Remove(component);
 
 			component.Terminate();
+
+		}
+
+		public CoreEngine Engine
+		{
+
+			get
+			{
+
+				return engine;
+
+			}
 
 		}
 
@@ -159,24 +172,6 @@ namespace STBEngine.Core
 			{
 
 				this.mesh = value;
-
-			}
-
-		}
-
-		public Shader Shader
-		{
-
-			get
-			{
-
-				return shader;
-
-			}
-			set
-			{
-
-				this.shader = value;
 
 			}
 

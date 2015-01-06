@@ -44,6 +44,7 @@
     <Folder Include="res\" />
     <Folder Include="res\shaders\" />
     <Folder Include="src\STBEngine\Physics\Collision\" />
+    <Folder Include="src\STBEngine\Rendering\Shaders\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Drawing" />
@@ -86,17 +87,23 @@
     <Compile Include="src\STBEngine\Physics\Collision\BoundingSphere.cs" />
     <Compile Include="src\STBEngine\Physics\Collision\CollisionResponse.cs" />
     <Compile Include="src\STBEngine\Rendering\GUI.cs" />
+    <Compile Include="src\STBEngine\Rendering\Shaders\GUIShader.cs" />
+    <Compile Include="src\STBEngine\Rendering\Shaders\BasicShader.cs" />
+    <Compile Include="src\STBEngine\Rendering\Shaders\DirectionalLightShader.cs" />
+    <Compile Include="src\STBEngine\Rendering\Shaders\PointLightShader.cs" />
+    <Compile Include="src\STBEngine\Rendering\Shaders\SpotLightShader.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="res\shaders\basicFS.glsl" />
     <EmbeddedResource Include="res\shaders\basicVS.glsl" />
-    <EmbeddedResource Include="res\shaders\phongFS.glsl" />
-    <EmbeddedResource Include="res\shaders\phongVS.glsl" />
     <EmbeddedResource Include="res\shaders\basicGS.glsl" />
-    <EmbeddedResource Include="res\shaders\phongGS.glsl" />
     <EmbeddedResource Include="res\shaders\guiFS.glsl" />
     <EmbeddedResource Include="res\shaders\guiGS.glsl" />
     <EmbeddedResource Include="res\shaders\guiVS.glsl" />
+    <EmbeddedResource Include="res\shaders\lightBasicFS.glsl" />
+    <EmbeddedResource Include="res\shaders\lightDirectionalFS.glsl" />
+    <EmbeddedResource Include="res\shaders\lightPointFS.glsl" />
+    <EmbeddedResource Include="res\shaders\lightSpotFS.glsl" />
+    <EmbeddedResource Include="res\shaders\lighting.glsl" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

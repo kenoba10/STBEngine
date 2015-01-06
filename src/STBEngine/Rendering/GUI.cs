@@ -9,6 +9,7 @@ using OpenTK.Graphics.OpenGL;
 
 using STBEngine.Core;
 using STBEngine.Rendering;
+using STBEngine.Rendering.Shaders;
 
 namespace STBEngine.Rendering
 {
@@ -116,52 +117,34 @@ namespace STBEngine.Rendering
 	public abstract class GUI
 	{
 
-		private List<GUIObject> backgroundObjects;
-		private List<GUIObject> foregroundObjects;
-
-		private Shader shader;
+		private List<GUIObject> guiObjects;
 
 		public GUI()
 		{
 
-			backgroundObjects = new List<GUIObject>();
-			foregroundObjects = new List<GUIObject>();
-
-			shader = new Shader();
+			guiObjects = new List<GUIObject>();
 
 		}
 
 		public void Initialize()
 		{
 
-			shader.AddVertexShader(Shader.GUI_VERTEX_SHADER);
-			shader.AddGeometryShader(Shader.GUI_GEOMETRY_SHADER);
-			shader.AddFragmentShader(Shader.GUI_FRAGMENT_SHADER);
-
-			shader.Compile();
-
-			shader.Bind();
-			
-			shader.SetUniform("projection", Matrix4.CreateOrthographicOffCenter(0f, 720f, 480f, 0f, -1f, 1f));
-
-			shader.UnBind();
-
 			Draw();
 
 		}
 
-		public void DrawBackground()
+		public void Render()
 		{
 
-			shader.Bind();
+			GUIShader.Instance.Bind();
 
-			shader.SetUniform("depth", 0.0001f);
+			GL.DepthMask(false);
+			GL.DepthFunc(DepthFunction.Always);
 
-			foreach(GUIObject guiObject in backgroundObjects)
+			foreach(GUIObject guiObject in guiObjects)
 			{
 
-				shader.SetUniform("useTexture", guiObject.UseTexture ? 1 : 0);
-				shader.SetUniform("baseColor", new Vector4(guiObject.Color.R, guiObject.Color.G, guiObject.Color.B, guiObject.Color.A));
+				GUIShader.Instance.UpdateUniforms(guiObject);
 
 				if(guiObject.UseTexture)
 				{
@@ -191,61 +174,17 @@ namespace STBEngine.Rendering
 
 			}
 
-			shader.UnBind();
+			GL.DepthFunc(DepthFunction.Less);
+			GL.DepthMask(true);
 
-		}
-
-		public void DrawForeground(float depthIndex)
-		{
-
-			shader.Bind();
-
-			foreach(GUIObject guiObject in foregroundObjects)
-			{
-
-				shader.SetUniform("depth", depthIndex);
-
-				shader.SetUniform("useTexture", guiObject.UseTexture ? 1 : 0);
-				shader.SetUniform("baseColor", new Vector4(guiObject.Color.R, guiObject.Color.G, guiObject.Color.B, guiObject.Color.A));
-
-				if(guiObject.UseTexture)
-				{
-
-					guiObject.Texture.Bind();
-
-				}
-
-				GL.BindVertexArray(guiObject.VAO);
-
-				GL.EnableVertexAttribArray(0);
-				GL.EnableVertexAttribArray(1);
-
-				GL.DrawArrays(PrimitiveType.Triangles, 0, 6);
-
-				GL.DisableVertexAttribArray(1);
-				GL.DisableVertexAttribArray(0);
-
-				GL.BindVertexArray(0);
-
-				if(guiObject.UseTexture)
-				{
-
-					guiObject.Texture.UnBind();
-
-				}
-
-				depthIndex += 0.0002f;
-
-			}
-
-			shader.UnBind();
+			GUIShader.Instance.UnBind();
 
 		}
 
 		public void Terminate()
 		{
 
-			foreach(GUIObject guiObject in foregroundObjects)
+			foreach(GUIObject guiObject in guiObjects)
 			{
 
 				GL.DeleteBuffer(guiObject.TBO);
@@ -255,22 +194,14 @@ namespace STBEngine.Rendering
 
 			}
 
-			foreach(GUIObject guiObject in backgroundObjects)
-			{
-
-				GL.DeleteBuffer(guiObject.TBO);
-				GL.DeleteBuffer(guiObject.PBO);
-
-				GL.DeleteVertexArray(guiObject.VAO);
-
-			}
+			GUIShader.Instance.Delete();
 
 		}
 
 		public abstract void Draw();
 		public abstract void Update();
 
-		protected int DrawRectangle(Vector2 position, Vector2 size, Color4 color, bool foreground)
+		protected int DrawRectangle(Vector2 position, Vector2 size, Color4 color)
 		{
 
 			Vector2[] positions = new Vector2[] { position, position + new Vector2(size.X, 0f), position + size, position, position + size, position + new Vector2(0f, size.Y) };
@@ -302,26 +233,13 @@ namespace STBEngine.Rendering
 
 			GL.BindVertexArray(0);
 
-			if(foreground)
-			{
-			
-				foregroundObjects.Add(new GUIObject(vao, pbo, tbo, false, color, null));
+			guiObjects.Add(new GUIObject(vao, pbo, tbo, false, color, null));
 
-				return foregroundObjects.Count - 1;
-
-			}
-			else
-			{
-
-				backgroundObjects.Add(new GUIObject(vao, pbo, tbo, false, color, null));
-
-				return backgroundObjects.Count - 1;
-
-			}
+			return guiObjects.Count - 1;
 
 		}
 
-		protected int DrawRectangle(Vector2 position, Vector2 size, Texture texture, bool foreground)
+		protected int DrawRectangle(Vector2 position, Vector2 size, Texture texture)
 		{
 
 			Vector2[] positions = new Vector2[] { position, position + new Vector2(size.X, 0f), position + size, position, position + size, position + new Vector2(0f, size.Y) };
@@ -353,22 +271,9 @@ namespace STBEngine.Rendering
 
 			GL.BindVertexArray(0);
 
-			if(foreground)
-			{
+			guiObjects.Add(new GUIObject(vao, pbo, tbo, true, Color4.White, texture));
 
-				foregroundObjects.Add(new GUIObject(vao, pbo, tbo, true, Color4.White, texture));
-
-				return foregroundObjects.Count - 1;
-
-			}
-			else
-			{
-
-				backgroundObjects.Add(new GUIObject(vao, pbo, tbo, true, Color4.White, texture));
-
-				return backgroundObjects.Count - 1;
-
-			}
+			return guiObjects.Count - 1;
 
 		}
 
@@ -391,65 +296,31 @@ namespace STBEngine.Rendering
 			Texture texture = new Texture();
 			texture.LoadTexture(data, bitmap.Width, bitmap.Height);
 
-			return DrawRectangle(new Vector2(0, 0), new Vector2(720, 480), texture, true);
+			return DrawRectangle(new Vector2(0, 0), new Vector2(720, 480), texture);
 
 		}
 
-		protected void AddGUIObject(GUIObject guiObject, bool foreground)
+		protected void AddGUIObject(GUIObject guiObject)
 		{
 
-			if(foreground)
-			{
-
-				foregroundObjects.Add(guiObject);
-
-			}
-			else
-			{
-
-				backgroundObjects.Add(guiObject);
-
-			}
+			guiObjects.Add(guiObject);
 
 		}
 
-		protected void RemoveGUIObject(GUIObject guiObject, bool foreground)
+		protected void RemoveGUIObject(GUIObject guiObject)
 		{
 
-			if(foreground)
-			{
-
-				foregroundObjects.Remove(guiObject);
-
-			}
-			else
-			{
-
-				backgroundObjects.Remove(guiObject);
-
-			}
+			guiObjects.Remove(guiObject);
 
 		}
 
-		protected List<GUIObject> BackgroundObjects
+		protected List<GUIObject> GUIObjects
 		{
 
 			get
 			{
 
-				return backgroundObjects;
-
-			}
-
-		}
-
-		protected List<GUIObject> ForegroundObjects
-		{
-
-			get
-			{
-
-				return foregroundObjects;
+				return guiObjects;
 
 			}
 
