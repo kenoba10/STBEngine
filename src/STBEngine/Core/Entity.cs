@@ -19,7 +19,6 @@ namespace STBEngine.Core
 
 		private Transformation transformation;
 		private Material material;
-		private Mesh mesh;
 		private List<Collider> colliders;
 		private Vector3 velocity;
 		private float distance;
@@ -29,7 +28,6 @@ namespace STBEngine.Core
 
 			transformation = new Transformation();
 			material = new Material();
-			mesh = new Mesh();
 			colliders = new List<Collider>();
 			velocity = new Vector3(0f, 0f, 0f);
 			distance = 0.5f;
@@ -76,6 +74,18 @@ namespace STBEngine.Core
 
 		}
 
+		public void Render()
+		{
+
+			foreach(Component component in components)
+			{
+
+				component.Render();
+
+			}
+
+		}
+
 		public void Terminate()
 		{
 
@@ -86,7 +96,6 @@ namespace STBEngine.Core
 
 			}
 
-			mesh.RemoveVertices();
 			material.Terminate();
 
 		}
@@ -154,24 +163,6 @@ namespace STBEngine.Core
 			{
 
 				this.material = value;
-
-			}
-
-		}
-
-		public Mesh Mesh
-		{
-
-			get
-			{
-
-				return mesh;
-
-			}
-			set
-			{
-
-				this.mesh = value;
 
 			}
 

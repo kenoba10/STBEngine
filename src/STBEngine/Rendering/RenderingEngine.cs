@@ -101,6 +101,12 @@ namespace STBEngine.Rendering
 		public void Terminate()
 		{
 
+			SpotLightShader.Instance.Delete();
+			PointLightShader.Instance.Delete();
+			DirectionalLightShader.Instance.Delete();
+
+			BasicShader.Instance.Delete();
+
 		}
 
 		public void Render(Entity entity)
@@ -112,7 +118,7 @@ namespace STBEngine.Rendering
 
 			entity.Material.Texture.Bind();
 
-			entity.Mesh.Draw();
+			entity.Render();
 
 			entity.Material.Texture.UnBind();
 
@@ -129,7 +135,7 @@ namespace STBEngine.Rendering
 
 				DirectionalLightShader.Instance.UpdateUniforms(engine, entity, light);
 
-				entity.Mesh.Draw();
+				entity.Render();
 
 				DirectionalLightShader.Instance.UnBind();
 
@@ -142,7 +148,7 @@ namespace STBEngine.Rendering
 
 				PointLightShader.Instance.UpdateUniforms(engine, entity, light);
 
-				entity.Mesh.Draw();
+				entity.Render();
 
 				PointLightShader.Instance.UnBind();
 
@@ -155,7 +161,7 @@ namespace STBEngine.Rendering
 
 				SpotLightShader.Instance.UpdateUniforms(engine, entity, light);
 
-				entity.Mesh.Draw();
+				entity.Render();
 
 				SpotLightShader.Instance.UnBind();
 

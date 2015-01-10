@@ -45,6 +45,8 @@
     <Folder Include="res\shaders\" />
     <Folder Include="src\STBEngine\Physics\Collision\" />
     <Folder Include="src\STBEngine\Rendering\Shaders\" />
+    <Folder Include="src\STBEngine\Rendering\Models\" />
+    <Folder Include="res\models\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Drawing" />
@@ -65,7 +67,6 @@
     <Compile Include="src\STBEngine\Rendering\Vertex.cs" />
     <Compile Include="src\STBEngine\Rendering\Index.cs" />
     <Compile Include="src\STBEngine\Rendering\Mesh.cs" />
-    <Compile Include="src\STBEngine\Rendering\Shader.cs" />
     <Compile Include="src\STBEngine\Utilities\IOUtils.cs" />
     <Compile Include="src\STBEngine\Core\Transformation.cs" />
     <Compile Include="src\STBEngine\Core\Components\Component.cs" />
@@ -92,6 +93,10 @@
     <Compile Include="src\STBEngine\Rendering\Shaders\DirectionalLightShader.cs" />
     <Compile Include="src\STBEngine\Rendering\Shaders\PointLightShader.cs" />
     <Compile Include="src\STBEngine\Rendering\Shaders\SpotLightShader.cs" />
+    <Compile Include="src\STBEngine\Core\Components\MeshRenderer.cs" />
+    <Compile Include="src\STBEngine\Rendering\Shaders\Shader.cs" />
+    <Compile Include="src\STBEngine\Rendering\Models\Model.cs" />
+    <Compile Include="src\STBEngine\Rendering\Models\OBJModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="res\shaders\basicVS.glsl" />
@@ -104,6 +109,7 @@
     <EmbeddedResource Include="res\shaders\lightPointFS.glsl" />
     <EmbeddedResource Include="res\shaders\lightSpotFS.glsl" />
     <EmbeddedResource Include="res\shaders\lighting.glsl" />
+    <EmbeddedResource Include="res\models\monkey.obj" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

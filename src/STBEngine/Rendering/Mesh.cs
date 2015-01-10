@@ -3,6 +3,8 @@ using System;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
+using STBEngine.Rendering.Models;
+
 namespace STBEngine.Rendering
 {
 
@@ -20,13 +22,11 @@ namespace STBEngine.Rendering
 		private uint vertexCount;
 		private uint indexCount;
 
-		public void AddVertices(Vertex[] vertices, Index[] indicies)
+		public Mesh(Model model)
 		{
 
-			calculateNormals(vertices, indicies);
-
-			vertexCount = (uint) vertices.Length;
-			indexCount = (uint) indicies.Length;
+			vertexCount = model.VertexCount;
+			indexCount = model.IndexCount;
 
 			vao = GL.GenVertexArray();
 
@@ -36,7 +36,7 @@ namespace STBEngine.Rendering
 
 			GL.BindBuffer(BufferTarget.ArrayBuffer, pbo);
 
-			GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(Vector3.SizeInBytes * vertexCount), Vertex.CreateVertexArray(vertices), BufferUsageHint.StaticDraw);
+			GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(Vector3.SizeInBytes * vertexCount), Vertex.CreateVertexArray(model.Vertices.ToArray()), BufferUsageHint.StaticDraw);
 
 			GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, Vector3.SizeInBytes, 0);
 
@@ -46,7 +46,7 @@ namespace STBEngine.Rendering
 
 			GL.BindBuffer(BufferTarget.ArrayBuffer, tbo);
 
-			GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(Vector2.SizeInBytes * vertexCount), Vertex.CreateTextureCoordinateArray(vertices), BufferUsageHint.StaticDraw);
+			GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(Vector2.SizeInBytes * vertexCount), Vertex.CreateTextureCoordinateArray(model.Vertices.ToArray()), BufferUsageHint.StaticDraw);
 
 			GL.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, Vector2.SizeInBytes, 0);
 
@@ -56,7 +56,7 @@ namespace STBEngine.Rendering
 
 			GL.BindBuffer(BufferTarget.ArrayBuffer, nbo);
 
-			GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(Vector3.SizeInBytes * vertexCount), Vertex.CreateNormalArray(vertices), BufferUsageHint.StaticDraw);
+			GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(Vector3.SizeInBytes * vertexCount), Vertex.CreateNormalArray(model.Vertices.ToArray()), BufferUsageHint.StaticDraw);
 
 			GL.VertexAttribPointer(2, 3, VertexAttribPointerType.Float, false, Vector3.SizeInBytes, 0);
 
@@ -66,7 +66,7 @@ namespace STBEngine.Rendering
 
 			GL.BindBuffer(BufferTarget.ElementArrayBuffer, ibo);
 
-			GL.BufferData(BufferTarget.ElementArrayBuffer, new IntPtr(4 * indexCount), indicies, BufferUsageHint.StaticDraw);
+			GL.BufferData(BufferTarget.ElementArrayBuffer, new IntPtr(4 * indexCount), model.Indicies.ToArray(), BufferUsageHint.StaticDraw);
 
 			GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
 
@@ -97,7 +97,7 @@ namespace STBEngine.Rendering
 
 		}
 
-		public void RemoveVertices()
+		public void Delete()
 		{
 
 			GL.DeleteBuffer(ibo);
@@ -107,36 +107,6 @@ namespace STBEngine.Rendering
 			GL.DeleteBuffer(pbo);
 
 			GL.DeleteVertexArray(vao);
-
-		}
-
-		private void calculateNormals(Vertex[] vertices, Index[] indicies)
-		{
-
-			for(uint i = 0; i < indicies.Length; i += 3)
-			{
-
-				uint i0 = indicies[i].Index_;
-				uint i1 = indicies[i + 1].Index_;
-				uint i2 = indicies[i + 2].Index_;
-
-				Vector3 v1 = vertices[i1].Position - vertices[i0].Position;
-				Vector3 v2 = vertices[i2].Position - vertices[i0].Position;
-
-				Vector3 normal = Vector3.Cross(v1, v2).Normalized();
-
-				vertices[i0].Normal = vertices[i0].Normal + normal;
-				vertices[i1].Normal = vertices[i1].Normal + normal;
-				vertices[i2].Normal = vertices[i2].Normal + normal;
-
-			}
-
-			foreach(Vertex vertex in vertices)
-			{
-
-				vertex.Normal.Normalize();
-
-			}
 
 		}
 

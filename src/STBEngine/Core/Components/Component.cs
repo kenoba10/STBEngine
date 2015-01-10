@@ -23,6 +23,11 @@ namespace STBEngine.Core.Components
 
 		}
 
+		public virtual void Render()
+		{
+
+		}
+
 		public virtual void Terminate()
 		{
 

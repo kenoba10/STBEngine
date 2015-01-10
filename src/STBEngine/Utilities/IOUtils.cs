@@ -10,13 +10,10 @@ namespace STBEngine.Utilities
 	public static class IOUtils
 	{
 
-		public static string ReadFile(string path, bool file)
+		public static Stream GetAssemblyStream(string path)
 		{
 
-			if(file)
-				return ReadFile(new FileStream(path, FileMode.Open));
-			else
-				return ReadFile(Assembly.GetExecutingAssembly().GetManifestResourceStream(path));
+			return Assembly.GetExecutingAssembly().GetManifestResourceStream(path);
 
 		}
 

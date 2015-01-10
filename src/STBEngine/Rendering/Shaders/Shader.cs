@@ -3,7 +3,7 @@ using System;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-namespace STBEngine.Rendering
+namespace STBEngine.Rendering.Shaders
 {
 
 	public abstract class Shader
@@ -14,15 +14,12 @@ namespace STBEngine.Rendering
 		public Shader()
 		{
 
-			program = 0;
+			program = GL.CreateProgram();
 
 		}
 
 		public void AddVertexShader(string source)
 		{
-
-			if(program == 0)
-				program = GL.CreateProgram();
 
 			int shader = GL.CreateShader(ShaderType.VertexShader);
 
@@ -47,9 +44,6 @@ namespace STBEngine.Rendering
 		public void AddGeometryShader(string source)
 		{
 
-			if(program == 0)
-				program = GL.CreateProgram();
-
 			int shader = GL.CreateShader(ShaderType.GeometryShader);
 
 			GL.ShaderSource(shader, source);
@@ -73,9 +67,6 @@ namespace STBEngine.Rendering
 
 		public void AddFragmentShader(string source)
 		{
-
-			if(program == 0)
-				program = GL.CreateProgram();
 
 			int shader = GL.CreateShader(ShaderType.FragmentShader);
 

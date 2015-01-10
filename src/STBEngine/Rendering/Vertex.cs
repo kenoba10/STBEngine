@@ -12,12 +12,17 @@ namespace STBEngine.Rendering
 		private Vector2 textureCoordinates;
 		private Vector3 normal;
 
-		public Vertex(Vector3 position, Vector2 textureCoordinates)
+		public Vertex(Vector3 position, Vector2 textureCoordinates) : this(position, textureCoordinates, new Vector3(0f, 0f, 0f))
+		{
+
+		}
+
+		public Vertex(Vector3 position, Vector2 textureCoordinates, Vector3 normal)
 		{
 
 			this.position = position;
 			this.textureCoordinates = textureCoordinates;
-			this.normal = new Vector3(0f, 0f, 0f);
+			this.normal = normal;
 
 		}
 
