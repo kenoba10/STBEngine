@@ -110,6 +110,8 @@
     <EmbeddedResource Include="res\shaders\lightSpotFS.glsl" />
     <EmbeddedResource Include="res\shaders\lighting.glsl" />
     <EmbeddedResource Include="res\models\monkey.obj" />
+    <EmbeddedResource Include="res\models\cube.obj" />
+    <EmbeddedResource Include="res\models\sphere.obj" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
