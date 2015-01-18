@@ -1,9 +1,10 @@
 using System;
 
 using OpenTK;
-using OpenTK.Input;
-using OpenTK.Graphics;
 using OpenTK.Audio;
+using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
+using OpenTK.Input;
 
 namespace STBEngine.Core
 {
@@ -15,7 +16,7 @@ namespace STBEngine.Core
 
 		private AudioContext AC;
 
-		public Window(string title, CoreEngine engine) : base(1080, 720, GraphicsMode.Default, title, GameWindowFlags.Default, DisplayDevice.Default, 3, 3, GraphicsContextFlags.Default)
+		public Window(string title, CoreEngine engine) : base(1080, 720, new GraphicsMode(32, 24, 0, 4), title, GameWindowFlags.Default, DisplayDevice.Default, 3, 3, GraphicsContextFlags.Default)
 		{
 
 			this.engine = engine;

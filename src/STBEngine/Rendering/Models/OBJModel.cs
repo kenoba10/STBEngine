@@ -1,6 +1,6 @@
 using System;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
 
 using OpenTK;
 
@@ -103,10 +103,10 @@ namespace STBEngine.Rendering.Models
 					}
 					else if(tokens[0] == "f")
 					{
-
-						indicies.Add(CalculateIndex(tokens[1]));
-						indicies.Add(CalculateIndex(tokens[2]));
+						
 						indicies.Add(CalculateIndex(tokens[3]));
+						indicies.Add(CalculateIndex(tokens[2]));
+						indicies.Add(CalculateIndex(tokens[1]));
 
 					}
 
@@ -163,7 +163,7 @@ namespace STBEngine.Rendering.Models
 					previousVertexIndex = indexMap[index];
 
 				}
-				catch(KeyNotFoundException e)
+				catch(KeyNotFoundException)
 				{
 					
 				}
@@ -171,7 +171,7 @@ namespace STBEngine.Rendering.Models
 				if(previousVertexIndex == -1)
 				{
 
-					AddVertex(new Vertex(position, textureCoordinate, normal));
+					AddVertex(new Vertex(position, textureCoordinate, normal, new Vector3(0f, 0f, 0f)));
 					AddIndex(new Index((uint) currentVertexIndex));
 
 					indexMap.Add(index, currentVertexIndex);
@@ -186,6 +186,15 @@ namespace STBEngine.Rendering.Models
 				}
 
 			}
+
+			if(normals[0] == new Vector3(0f, 0f, 0f))
+			{
+
+				CalculateNormals();
+
+			}
+
+			CalculateTangents();
 
 		}
 

@@ -6,8 +6,8 @@ using OpenTK.Audio;
 using OpenTK.Audio.OpenAL;
 
 using STBEngine.Core.Event;
-using STBEngine.Rendering;
 using STBEngine.Physics;
+using STBEngine.Rendering;
 
 namespace STBEngine.Core
 {

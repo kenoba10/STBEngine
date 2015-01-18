@@ -11,18 +11,20 @@ namespace STBEngine.Rendering
 		private Vector3 position;
 		private Vector2 textureCoordinates;
 		private Vector3 normal;
+		private Vector3 tangent;
 
-		public Vertex(Vector3 position, Vector2 textureCoordinates) : this(position, textureCoordinates, new Vector3(0f, 0f, 0f))
+		public Vertex(Vector3 position, Vector2 textureCoordinates) : this(position, textureCoordinates, new Vector3(0f, 0f, 0f), new Vector3(0f, 0f, 0f))
 		{
 
 		}
 
-		public Vertex(Vector3 position, Vector2 textureCoordinates, Vector3 normal)
+		public Vertex(Vector3 position, Vector2 textureCoordinates, Vector3 normal, Vector3 tangent)
 		{
 
 			this.position = position;
 			this.textureCoordinates = textureCoordinates;
 			this.normal = normal;
+			this.tangent = tangent;
 
 		}
 
@@ -67,6 +69,22 @@ namespace STBEngine.Rendering
 			{
 
 				newVertices[i] = vertices[i].Normal;
+
+			}
+
+			return newVertices;
+
+		}
+
+		public static Vector3[] CreateTangentArray(Vertex[] vertices)
+		{
+
+			Vector3[] newVertices = new Vector3[vertices.Length];
+
+			for(uint i = 0; i < vertices.Length; i++)
+			{
+
+				newVertices[i] = vertices[i].Tangent;
 
 			}
 
@@ -123,6 +141,24 @@ namespace STBEngine.Rendering
 			{
 
 				this.normal = value;
+
+			}
+
+		}
+
+		public Vector3 Tangent
+		{
+
+			get
+			{
+
+				return tangent;
+
+			}
+			set
+			{
+
+				this.tangent = value;
 
 			}
 

@@ -8,7 +8,6 @@ using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 
 using STBEngine.Core;
-using STBEngine.Rendering;
 using STBEngine.Rendering.Shaders;
 
 namespace STBEngine.Rendering
@@ -20,19 +19,19 @@ namespace STBEngine.Rendering
 		private int vao;
 
 		private int pbo;
-		private int tbo;
+		private int ubo;
 
 		private bool useTexture;
 		private Color4 color;
 		private Texture texture;
 
-		public GUIObject(int vao, int pbo, int tbo, bool useTexture, Color4 color, Texture texture)
+		public GUIObject(int vao, int pbo, int ubo, bool useTexture, Color4 color, Texture texture)
 		{
 
 			this.vao = vao;
 
 			this.pbo = pbo;
-			this.tbo = tbo;
+			this.ubo = ubo;
 
 			this.useTexture = useTexture;
 			this.color = color;
@@ -64,13 +63,13 @@ namespace STBEngine.Rendering
 
 		}
 
-		public int TBO
+		public int UBO
 		{
 
 			get
 			{
 
-				return tbo;
+				return ubo;
 
 			}
 
@@ -97,6 +96,12 @@ namespace STBEngine.Rendering
 				return color;
 
 			}
+			set
+			{
+
+				this.color = value;
+
+			}
 
 		}
 
@@ -107,6 +112,12 @@ namespace STBEngine.Rendering
 			{
 
 				return texture;
+
+			}
+			set
+			{
+
+				this.texture = value;
 
 			}
 
@@ -141,6 +152,8 @@ namespace STBEngine.Rendering
 			GL.DepthMask(false);
 			GL.DepthFunc(DepthFunction.Always);
 
+			RenderC();
+
 			foreach(GUIObject guiObject in guiObjects)
 			{
 
@@ -149,7 +162,7 @@ namespace STBEngine.Rendering
 				if(guiObject.UseTexture)
 				{
 
-					guiObject.Texture.Bind();
+					guiObject.Texture.Bind(TextureUnit.Texture0);
 
 				}
 
@@ -187,21 +200,22 @@ namespace STBEngine.Rendering
 			foreach(GUIObject guiObject in guiObjects)
 			{
 
-				GL.DeleteBuffer(guiObject.TBO);
+				GL.DeleteBuffer(guiObject.UBO);
 				GL.DeleteBuffer(guiObject.PBO);
 
 				GL.DeleteVertexArray(guiObject.VAO);
 
 			}
 
-			GUIShader.Instance.Delete();
+			guiObjects.Clear();
 
 		}
 
 		public abstract void Draw();
 		public abstract void Update();
+		public abstract void RenderC();
 
-		protected int DrawRectangle(Vector2 position, Vector2 size, Color4 color)
+		protected GUIObject DrawRectangle(Vector2 position, Vector2 size, Color4 color)
 		{
 
 			Vector2[] positions = new Vector2[] { position, position + new Vector2(size.X, 0f), position + size, position, position + size, position + new Vector2(0f, size.Y) };
@@ -221,9 +235,9 @@ namespace STBEngine.Rendering
 
 			GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
 
-			int tbo = GL.GenBuffer();
+			int ubo = GL.GenBuffer();
 
-			GL.BindBuffer(BufferTarget.ArrayBuffer, tbo);
+			GL.BindBuffer(BufferTarget.ArrayBuffer, ubo);
 
 			GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(Vector2.SizeInBytes * 6), textureCoordinates, BufferUsageHint.StreamDraw);
 
@@ -233,13 +247,11 @@ namespace STBEngine.Rendering
 
 			GL.BindVertexArray(0);
 
-			guiObjects.Add(new GUIObject(vao, pbo, tbo, false, color, null));
-
-			return guiObjects.Count - 1;
+			return new GUIObject(vao, pbo, ubo, false, color, null);
 
 		}
 
-		protected int DrawRectangle(Vector2 position, Vector2 size, Texture texture)
+		protected GUIObject DrawRectangle(Vector2 position, Vector2 size, Texture texture)
 		{
 
 			Vector2[] positions = new Vector2[] { position, position + new Vector2(size.X, 0f), position + size, position, position + size, position + new Vector2(0f, size.Y) };
@@ -259,9 +271,9 @@ namespace STBEngine.Rendering
 
 			GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
 
-			int tbo = GL.GenBuffer();
+			int ubo = GL.GenBuffer();
 
-			GL.BindBuffer(BufferTarget.ArrayBuffer, tbo);
+			GL.BindBuffer(BufferTarget.ArrayBuffer, ubo);
 
 			GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(Vector2.SizeInBytes * 6), textureCoordinates, BufferUsageHint.StreamDraw);
 
@@ -271,13 +283,11 @@ namespace STBEngine.Rendering
 
 			GL.BindVertexArray(0);
 
-			guiObjects.Add(new GUIObject(vao, pbo, tbo, true, Color4.White, texture));
-
-			return guiObjects.Count - 1;
+			return new GUIObject(vao, pbo, ubo, true, Color4.White, texture);
 
 		}
 
-		protected int DrawString(Vector2 position, string text, Font font, Color color)
+		protected GUIObject DrawString(Vector2 position, string text, Font font, Color color)
 		{
 
 			Bitmap bitmap = new Bitmap(720, 480, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
@@ -321,6 +331,13 @@ namespace STBEngine.Rendering
 			{
 
 				return guiObjects;
+
+			}
+
+			set
+			{
+
+				this.guiObjects = value;
 
 			}
 

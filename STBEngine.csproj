@@ -87,7 +87,6 @@
     <Compile Include="src\STBEngine\Physics\Collision\Intersection.cs" />
     <Compile Include="src\STBEngine\Physics\Collision\BoundingSphere.cs" />
     <Compile Include="src\STBEngine\Physics\Collision\CollisionResponse.cs" />
-    <Compile Include="src\STBEngine\Rendering\GUI.cs" />
     <Compile Include="src\STBEngine\Rendering\Shaders\GUIShader.cs" />
     <Compile Include="src\STBEngine\Rendering\Shaders\BasicShader.cs" />
     <Compile Include="src\STBEngine\Rendering\Shaders\DirectionalLightShader.cs" />
@@ -97,6 +96,7 @@
     <Compile Include="src\STBEngine\Rendering\Shaders\Shader.cs" />
     <Compile Include="src\STBEngine\Rendering\Models\Model.cs" />
     <Compile Include="src\STBEngine\Rendering\Models\OBJModel.cs" />
+    <Compile Include="src\STBEngine\Rendering\GUI.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="res\shaders\basicVS.glsl" />
@@ -112,6 +112,7 @@
     <EmbeddedResource Include="res\models\monkey.obj" />
     <EmbeddedResource Include="res\models\cube.obj" />
     <EmbeddedResource Include="res\models\sphere.obj" />
+    <EmbeddedResource Include="res\shaders\utils.glsl" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

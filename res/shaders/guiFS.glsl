@@ -18,12 +18,9 @@ uniform sampler2D activeTexture;
 void main()
 {
 	
-	vec4 outputColor = baseColor;
-	vec4 outputTexture = texture(activeTexture, vertex.textureCoordinates);
+	color = baseColor;
 	
 	if(useTexture == 1)
-		color = outputColor * outputTexture;
-	else
-		color = outputColor;
+		color *= texture(activeTexture, vertex.textureCoordinates);
 	
 }

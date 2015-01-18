@@ -14,8 +14,9 @@ namespace STBEngine.Rendering
 		private int vao;
 
 		private int pbo;
-		private int tbo;
+		private int ubo;
 		private int nbo;
+		private int tbo;
 
 		private int ibo;
 
@@ -42,9 +43,9 @@ namespace STBEngine.Rendering
 
 			GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
 
-			tbo = GL.GenBuffer();
+			ubo = GL.GenBuffer();
 
-			GL.BindBuffer(BufferTarget.ArrayBuffer, tbo);
+			GL.BindBuffer(BufferTarget.ArrayBuffer, ubo);
 
 			GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(Vector2.SizeInBytes * vertexCount), Vertex.CreateTextureCoordinateArray(model.Vertices.ToArray()), BufferUsageHint.StaticDraw);
 
@@ -59,6 +60,16 @@ namespace STBEngine.Rendering
 			GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(Vector3.SizeInBytes * vertexCount), Vertex.CreateNormalArray(model.Vertices.ToArray()), BufferUsageHint.StaticDraw);
 
 			GL.VertexAttribPointer(2, 3, VertexAttribPointerType.Float, false, Vector3.SizeInBytes, 0);
+
+			GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+
+			tbo = GL.GenBuffer();
+
+			GL.BindBuffer(BufferTarget.ArrayBuffer, tbo);
+
+			GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(Vector3.SizeInBytes * vertexCount), Vertex.CreateTangentArray(model.Vertices.ToArray()), BufferUsageHint.StaticDraw);
+
+			GL.VertexAttribPointer(3, 3, VertexAttribPointerType.Float, false, Vector3.SizeInBytes, 0);
 
 			GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
 
@@ -82,6 +93,7 @@ namespace STBEngine.Rendering
 			GL.EnableVertexAttribArray(0);
 			GL.EnableVertexAttribArray(1);
 			GL.EnableVertexAttribArray(2);
+			GL.EnableVertexAttribArray(3);
 
 			GL.BindBuffer(BufferTarget.ElementArrayBuffer, ibo);
 
@@ -89,6 +101,7 @@ namespace STBEngine.Rendering
 
 			GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
 
+			GL.DisableVertexAttribArray(3);
 			GL.DisableVertexAttribArray(2);
 			GL.DisableVertexAttribArray(1);
 			GL.DisableVertexAttribArray(0);
@@ -102,8 +115,9 @@ namespace STBEngine.Rendering
 
 			GL.DeleteBuffer(ibo);
 
-			GL.DeleteBuffer(nbo);
 			GL.DeleteBuffer(tbo);
+			GL.DeleteBuffer(nbo);
+			GL.DeleteBuffer(ubo);
 			GL.DeleteBuffer(pbo);
 
 			GL.DeleteVertexArray(vao);

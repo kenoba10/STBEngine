@@ -30,8 +30,18 @@ namespace STBEngine.Rendering.Shaders
 			SetUniform("projection", engine.RenderingEngine.Camera.Projection);
 			SetUniform("transformation", entity.Transformation.GetTransformation());
 
+			SetUniform("eyePosition", engine.RenderingEngine.Camera.Parent.Transformation.Position);
+
+			SetUniform("displacementScale", entity.Material.DisplacementScale);
+			SetUniform("displacementBias", -(entity.Material.DisplacementScale / 2f) + (entity.Material.DisplacementScale / 2f) * entity.Material.DisplacementOffset);
+
+			SetUniform("useDisplacementMap", entity.Material.DisplacementMap.Initialized ? 1 : 0);
+			SetUniform("displacementMap", 0);
+
 			SetUniform("useTexture", entity.Material.Texture.Initialized ? 1 : 0);
+
 			SetUniform("baseColor", new Vector4(entity.Material.Color.R, entity.Material.Color.G, entity.Material.Color.B, entity.Material.Color.A));
+			SetUniform("activeTexture", 1);
 
 			SetUniform("ambientLight", entity.Material.AmbientLight);
 

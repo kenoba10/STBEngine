@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 
 using OpenTK;
-using OpenTK.Input;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
+using OpenTK.Input;
 
 using STBEngine.Core;
 using STBEngine.Core.Components;
@@ -56,6 +56,13 @@ namespace STBEngine.Rendering
 		public void Update()
 		{
 
+			foreach(GUI gui in guis)
+			{
+
+				gui.Update();
+
+			}
+
 			if(openGUI != null)
 			{
 
@@ -70,24 +77,10 @@ namespace STBEngine.Rendering
 
 			}
 
-			foreach(GUI gui in guis)
-			{
-
-				gui.Update();
-
-			}
-
 		}
 
 		public void Render()
 		{
-
-			if(openGUI != null)
-			{
-
-				openGUI.Render();
-
-			}
 
 			foreach(GUI gui in guis)
 			{
@@ -96,10 +89,19 @@ namespace STBEngine.Rendering
 
 			}
 
+			if(openGUI != null)
+			{
+
+				openGUI.Render();
+
+			}
+
 		}
 
 		public void Terminate()
 		{
+
+			GUIShader.Instance.Delete();
 
 			SpotLightShader.Instance.Delete();
 			PointLightShader.Instance.Delete();
@@ -111,12 +113,14 @@ namespace STBEngine.Rendering
 
 		public void Render(Entity entity)
 		{
+			
+			entity.Material.DisplacementMap.Bind(TextureUnit.Texture0);
 
 			BasicShader.Instance.Bind();
 
 			BasicShader.Instance.UpdateUniforms(engine, entity);
-
-			entity.Material.Texture.Bind();
+			
+			entity.Material.Texture.Bind(TextureUnit.Texture1);
 
 			entity.Render();
 
@@ -127,49 +131,55 @@ namespace STBEngine.Rendering
 			GL.DepthMask(false);
 			GL.DepthFunc(DepthFunction.Equal);
 			GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.One);
+			
+			entity.Material.NormalMap.Bind(TextureUnit.Texture1);
+
+			DirectionalLightShader.Instance.Bind();
 
 			foreach(DirectionalLight light in directionalLights)
 			{
-
-				DirectionalLightShader.Instance.Bind();
 
 				DirectionalLightShader.Instance.UpdateUniforms(engine, entity, light);
 
 				entity.Render();
 
-				DirectionalLightShader.Instance.UnBind();
-
 			}
+
+			DirectionalLightShader.Instance.UnBind();
+
+			PointLightShader.Instance.Bind();
 
 			foreach(PointLight light in pointLights)
 			{
-
-				PointLightShader.Instance.Bind();
 
 				PointLightShader.Instance.UpdateUniforms(engine, entity, light);
 
 				entity.Render();
 
-				PointLightShader.Instance.UnBind();
-
 			}
+
+			PointLightShader.Instance.UnBind();
+
+			SpotLightShader.Instance.Bind();
 
 			foreach(SpotLight light in spotLights)
 			{
-
-				SpotLightShader.Instance.Bind();
 
 				SpotLightShader.Instance.UpdateUniforms(engine, entity, light);
 
 				entity.Render();
 
-				SpotLightShader.Instance.UnBind();
-
 			}
+
+			SpotLightShader.Instance.UnBind();
+
+			entity.Material.NormalMap.UnBind();
 
 			GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 			GL.DepthFunc(DepthFunction.Less);
 			GL.DepthMask(true);
+
+			entity.Material.DisplacementMap.UnBind();
 
 		}
 

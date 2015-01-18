@@ -29,18 +29,19 @@ namespace STBEngine.Rendering.Models
 			foreach(Vertex vertex in vertices)
 			{
 
-				this.vertices.Add(vertex);
+				AddVertex(vertex);
 
 			}
 
 			foreach(Index index in indicies)
 			{
 
-				this.indicies.Add(index);
+				AddIndex(index);
 
 			}
 
-			Model.CalculateNormals(this.vertices, this.indicies);
+			CalculateNormals();
+			CalculateTangents();
 
 		}
 
@@ -58,10 +59,13 @@ namespace STBEngine.Rendering.Models
 
 		}
 
-		public static void CalculateNormals(List<Vertex> vertices, List<Index> indicies)
+		public void CalculateNormals()
 		{
 
-			for(int i = 0; i < indicies.Count; i += 3)
+			Vertex[] vertices = this.vertices.ToArray();
+			Index[] indicies = this.indicies.ToArray();
+
+			for(int i = 0; i < indicies.Length; i += 3)
 			{
 
 				int i0 = (int) indicies[i].Index_;
@@ -83,6 +87,86 @@ namespace STBEngine.Rendering.Models
 			{
 
 				vertex.Normal.Normalize();
+
+			}
+
+			this.vertices.Clear();
+			this.indicies.Clear();
+
+			foreach(Vertex vertex in vertices)
+			{
+
+				AddVertex(vertex);
+
+			}
+
+			foreach(Index index in indicies)
+			{
+
+				AddIndex(index);
+
+			}
+
+		}
+
+		public void CalculateTangents()
+		{
+
+			Vertex[] vertices = this.vertices.ToArray();
+			Index[] indicies = this.indicies.ToArray();
+
+			for(int i = 0; i < indicies.Length; i += 3)
+			{
+
+				int i0 = (int) indicies[i].Index_;
+				int i1 = (int) indicies[i + 1].Index_;
+				int i2 = (int) indicies[i + 2].Index_;
+
+				Vector3 edge1 = vertices[i1].Position - vertices[i0].Position;
+				Vector3 edge2 = vertices[i2].Position - vertices[i0].Position;
+
+				float deltaU1 = vertices[i1].TextureCoordinates.X - vertices[i0].TextureCoordinates.X;
+				float deltaV1 = vertices[i1].TextureCoordinates.Y - vertices[i0].TextureCoordinates.Y;
+				float deltaU2 = vertices[i2].TextureCoordinates.X - vertices[i0].TextureCoordinates.X;
+				float deltaV2 = vertices[i2].TextureCoordinates.Y - vertices[i0].TextureCoordinates.Y;
+
+				float dividend = deltaU1 * deltaV2 - deltaU2 * deltaV1;
+
+				float f = dividend == 0f ? 0f : 1f / dividend;
+
+				Vector3 tangent = new Vector3(0f, 0f, 0f);
+
+				tangent.X = f * (deltaV2 * edge1.X - deltaV1 * edge2.X);
+				tangent.Y = f * (deltaV2 * edge1.Y - deltaV1 * edge2.Y);
+				tangent.Z = f * (deltaV2 * edge1.Z - deltaV1 * edge2.Z);
+
+				vertices[i0].Tangent += tangent;
+				vertices[i1].Tangent += tangent;
+				vertices[i2].Tangent += tangent;
+
+			}
+
+			foreach(Vertex vertex in vertices)
+			{
+
+				vertex.Tangent.Normalize();
+
+			}
+
+			this.vertices.Clear();
+			this.indicies.Clear();
+
+			foreach(Vertex vertex in vertices)
+			{
+
+				AddVertex(vertex);
+
+			}
+
+			foreach(Index index in indicies)
+			{
+
+				AddIndex(index);
 
 			}
 

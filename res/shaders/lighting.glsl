@@ -50,7 +50,7 @@ uniform float specularExponent;
 vec4 calculateLight(BaseLight light, vec3 direction, vec3 position, vec3 normal)
 {
 
-	float diffuseFactor = dot(normal, direction);
+	float diffuseFactor = dot(normal, -direction);
 
 	vec4 diffuseColor = vec4(0, 0, 0, 0);
 	vec4 specularColor = vec4(0, 0, 0, 0);
@@ -112,7 +112,7 @@ vec4 calculateSpotLight(SpotLight light, vec3 position, vec3 normal)
 	if(factor > light.cutoff)
 	{
 		
-		color = calculatePointLight(light.base, position, normal) * (1 - (1 - factor) / (1 - light.cutoff));
+		color = calculatePointLight(light.base, position, normal) * (1.0 - (1.0 - factor) / (1.0 - light.cutoff));
 
 	}
 

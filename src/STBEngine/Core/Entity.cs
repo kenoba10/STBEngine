@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using OpenTK;
 
 using STBEngine.Core.Components;
-using STBEngine.Rendering;
 using STBEngine.Physics.Collision;
+using STBEngine.Rendering;
 
 namespace STBEngine.Core
 {

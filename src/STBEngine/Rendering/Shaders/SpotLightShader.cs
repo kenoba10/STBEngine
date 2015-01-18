@@ -36,6 +36,15 @@ namespace STBEngine.Rendering.Shaders
 			SetUniform("specularIntensity", entity.Material.SpecularIntensity);
 			SetUniform("specularExponent", entity.Material.SpecularExponent);
 
+			SetUniform("displacementScale", entity.Material.DisplacementScale);
+			SetUniform("displacementBias", -(entity.Material.DisplacementScale / 2f) + (entity.Material.DisplacementScale / 2f) * entity.Material.DisplacementOffset);
+
+			SetUniform("useDisplacementMap", entity.Material.DisplacementMap.Initialized ? 1 : 0);
+			SetUniform("displacementMap", 0);
+
+			SetUniform("useNormalMap", entity.Material.NormalMap.Initialized ? 1 : 0);
+			SetUniform("normalMap", 1);
+
 			SetUniform("light.base.base.color", new Vector4(light.Base.Base.Color.R, light.Base.Base.Color.G, light.Base.Base.Color.B, light.Base.Base.Color.A));
 			SetUniform("light.base.base.intensity", light.Base.Base.Intensity);
 			SetUniform("light.base.attenuation.constant", light.Base.Attenuation.Constant);

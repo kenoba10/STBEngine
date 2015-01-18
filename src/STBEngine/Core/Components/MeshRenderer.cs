@@ -20,7 +20,7 @@ namespace STBEngine.Core.Components
 
 		public override void Render()
 		{
-
+			
 			mesh.Draw();
 
 		}
