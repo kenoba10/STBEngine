@@ -64,11 +64,13 @@ namespace STBEngine.Core
 			foreach(Entity entity in entities)
 			{
 
-				physicsEngine.Simulate(entity);
-
 				entity.Update();
 
+				physicsEngine.Simulate(entity);
+
 			}
+
+			physicsEngine.Simulate();
 
 		}
 

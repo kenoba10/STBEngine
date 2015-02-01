@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using OpenTK;
 
 using STBEngine.Core.Components;
-using STBEngine.Physics.Collision;
+using STBEngine.Physics.Collision.Colliders;
 using STBEngine.Rendering;
 
 namespace STBEngine.Core
@@ -15,22 +15,26 @@ namespace STBEngine.Core
 
 		private CoreEngine engine;
 
-		private List<Component> components;
-
 		private Transformation transformation;
 		private Material material;
+		private AxisAlignedBoundingBox aabb;
 		private List<Collider> colliders;
+
 		private Vector3 velocity;
-		private float distance;
+		private float mass;
+
+		private List<Component> components;
 
 		public Entity()
 		{
 
 			transformation = new Transformation();
 			material = new Material();
+			aabb = new AxisAlignedBoundingBox(new Vector3(0f, 0f, 0f), new Vector3(0f, 0f, 0f));
 			colliders = new List<Collider>();
+
 			velocity = new Vector3(0f, 0f, 0f);
-			distance = 0.5f;
+			mass = 1f;
 
 			components = new List<Component>();
 
@@ -58,19 +62,12 @@ namespace STBEngine.Core
 		public void Simulate()
 		{
 
-			transformation.Translate(velocity.Normalized(), distance);
-
-			velocity = new Vector3(0f, 0f, 0f);
-			distance = 0.5f;
-
 			foreach(Component component in components)
 			{
 
 				component.Simulate();
 
 			}
-
-			transformation.Translate(velocity.Normalized(), distance);
 
 		}
 
@@ -97,6 +94,13 @@ namespace STBEngine.Core
 			}
 
 			material.Terminate();
+
+		}
+
+		public void ApplyForce(Vector3 force)
+		{
+
+			velocity -= (force / mass);
 
 		}
 
@@ -168,6 +172,24 @@ namespace STBEngine.Core
 
 		}
 
+		public AxisAlignedBoundingBox AABB
+		{
+
+			get
+			{
+
+				return aabb;
+
+			}
+			set
+			{
+
+				this.aabb = value;
+
+			}
+
+		}
+
 		public List<Collider> Colliders
 		{
 
@@ -204,19 +226,19 @@ namespace STBEngine.Core
 
 		}
 
-		public float Distance
+		public float Mass
 		{
 
 			get
 			{
 
-				return distance;
+				return mass;
 
 			}
 			set
 			{
 
-				this.distance = value;
+				this.mass = value;
 
 			}
 

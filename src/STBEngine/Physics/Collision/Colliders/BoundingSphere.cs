@@ -4,9 +4,11 @@ using OpenTK;
 
 using STBEngine.Core;
 
-namespace STBEngine.Physics.Collision
+namespace STBEngine.Physics.Collision.Colliders
 {
 
+
+	//WARNING: Bounding Spheres and Polygons Are VERY BUGGY.  Use At Own Risk!
 	public class BoundingSphere : Collider
 	{
 
@@ -31,18 +33,13 @@ namespace STBEngine.Physics.Collision
 			if(collider.Type == ColliderType.BoundingSphere)
 			{
 
-				BoundingSphere bs = (BoundingSphere) collider;
-				
-				Vector3 direction = bs.Center - centerTransformed;
+				return Detection.Intersect(this, (BoundingSphere) collider);
 
-				float radiusDistance = radius + bs.Radius;
-				float centerDistance = direction.Length;
+			}
+			else if(collider.Type == ColliderType.BoundingPolygon)
+			{
 
-				direction.Normalize();
-
-				float distance = centerDistance - radiusDistance;
-
-				return new Intersection(distance < 0, direction * distance);
+				return Detection.Intersect(this, (BoundingPolygon) collider);
 
 			}
 

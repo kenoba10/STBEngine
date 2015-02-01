@@ -1,15 +1,16 @@
 ﻿using System;
 
 using STBEngine.Core;
-using STBEngine.Physics.Collision.Response;
 
-namespace STBEngine.Physics.Collision
+namespace STBEngine.Physics.Collision.Colliders
 {
 
 	public enum ColliderType
 	{
-		
-		BoundingSphere
+
+		AxisAlignedBoundingBox,
+		BoundingSphere,
+		BoundingPolygon
 
 	};
 

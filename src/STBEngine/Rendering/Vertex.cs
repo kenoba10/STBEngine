@@ -13,6 +13,11 @@ namespace STBEngine.Rendering
 		private Vector3 normal;
 		private Vector3 tangent;
 
+		public Vertex(Vector3 position) : this(position, new Vector2(0f, 0f), new Vector3(0f, 0f, 0f), new Vector3(0f, 0f, 0f))
+		{
+			
+		}
+
 		public Vertex(Vector3 position, Vector2 textureCoordinates) : this(position, textureCoordinates, new Vector3(0f, 0f, 0f), new Vector3(0f, 0f, 0f))
 		{
 

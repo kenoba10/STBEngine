@@ -9,13 +9,13 @@ namespace STBEngine.Physics.Collision
 	{
 
 		private bool intersecting;
-		private Vector3 direction;
+		private Vector3 distance;
 
-		public Intersection(bool intersecting, Vector3 direction)
+		public Intersection(bool intersecting, Vector3 distance)
 		{
 
 			this.intersecting = intersecting;
-			this.direction = direction;
+			this.distance = distance;
 
 		}
 
@@ -31,25 +31,13 @@ namespace STBEngine.Physics.Collision
 
 		}
 
-		public Vector3 Direction
+		public Vector3 Distance
 		{
 
 			get
 			{
 
-				return direction;
-
-			}
-
-		}
-
-		public float Distance
-		{
-
-			get
-			{
-
-				return direction.Length;
+				return distance;
 
 			}
 

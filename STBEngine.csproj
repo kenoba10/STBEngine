@@ -47,6 +47,8 @@
     <Folder Include="src\STBEngine\Rendering\Shaders\" />
     <Folder Include="src\STBEngine\Rendering\Models\" />
     <Folder Include="res\models\" />
+    <Folder Include="src\STBEngine\Physics\Collision\Colliders\" />
+    <Folder Include="src\STBEngine\Physics\Components\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Drawing" />
@@ -83,10 +85,7 @@
     <Compile Include="src\STBEngine\Core\Components\SpotLight.cs" />
     <Compile Include="src\STBEngine\Core\Components\FreeMove.cs" />
     <Compile Include="src\STBEngine\Core\Components\FreeLook.cs" />
-    <Compile Include="src\STBEngine\Physics\Collision\Collider.cs" />
     <Compile Include="src\STBEngine\Physics\Collision\Intersection.cs" />
-    <Compile Include="src\STBEngine\Physics\Collision\BoundingSphere.cs" />
-    <Compile Include="src\STBEngine\Physics\Collision\CollisionResponse.cs" />
     <Compile Include="src\STBEngine\Rendering\Shaders\GUIShader.cs" />
     <Compile Include="src\STBEngine\Rendering\Shaders\BasicShader.cs" />
     <Compile Include="src\STBEngine\Rendering\Shaders\DirectionalLightShader.cs" />
@@ -97,6 +96,13 @@
     <Compile Include="src\STBEngine\Rendering\Models\Model.cs" />
     <Compile Include="src\STBEngine\Rendering\Models\OBJModel.cs" />
     <Compile Include="src\STBEngine\Rendering\GUI.cs" />
+    <Compile Include="src\STBEngine\Physics\Collision\Colliders\BoundingSphere.cs" />
+    <Compile Include="src\STBEngine\Physics\Collision\Colliders\Collider.cs" />
+    <Compile Include="src\STBEngine\Physics\Collision\Colliders\AxisAlignedBoundingBox.cs" />
+    <Compile Include="src\STBEngine\Physics\Collision\Colliders\BoundingPolygon.cs" />
+    <Compile Include="src\STBEngine\Physics\Collision\Detection.cs" />
+    <Compile Include="src\STBEngine\Physics\Collision\Response.cs" />
+    <Compile Include="src\STBEngine\Physics\Components\PhysicsComponent.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="res\shaders\basicVS.glsl" />

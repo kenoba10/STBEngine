@@ -33,7 +33,7 @@ namespace STBEngine.Core.Components
 
 		}
 
-		public override void Simulate()
+		public override void Update()
 		{
 
 			if(Input.GetKeyDown(Key.P))

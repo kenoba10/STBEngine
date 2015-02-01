@@ -11,10 +11,14 @@ namespace STBEngine.Core.Components
 	public class FreeMove : Component
 	{
 
+		private float speed;
+
 		private bool guiOpened;
 
 		public FreeMove()
 		{
+
+			speed = 0.5f;
 
 			guiOpened = false;
 
@@ -27,7 +31,7 @@ namespace STBEngine.Core.Components
 
 		}
 
-		public override void Simulate()
+		public override void Update()
 		{
 
 			if(!guiOpened)
@@ -36,42 +40,42 @@ namespace STBEngine.Core.Components
 				if(Input.GetKey(Key.W))
 				{
 
-					parent.Velocity += parent.Engine.RenderingEngine.Camera.Forward;
+					parent.Transformation.Translate(parent.Engine.RenderingEngine.Camera.Forward, speed);
 
 				}
 
 				if(Input.GetKey(Key.S))
 				{
 
-					parent.Velocity += parent.Engine.RenderingEngine.Camera.Back;
+					parent.Transformation.Translate(parent.Engine.RenderingEngine.Camera.Back, speed);
 
 				}
 
 				if(Input.GetKey(Key.A))
 				{
 
-					parent.Velocity += parent.Engine.RenderingEngine.Camera.Left;
+					parent.Transformation.Translate(parent.Engine.RenderingEngine.Camera.Left, speed);
 
 				}
 
 				if(Input.GetKey(Key.D))
 				{
 
-					parent.Velocity += parent.Engine.RenderingEngine.Camera.Right;
+					parent.Transformation.Translate(parent.Engine.RenderingEngine.Camera.Right, speed);
 
 				}
 
 				if(Input.GetKey(Key.LShift))
 				{
 
-					parent.Velocity += parent.Engine.RenderingEngine.Camera.Down;
+					parent.Transformation.Translate(parent.Engine.RenderingEngine.Camera.Down, speed);
 
 				}
 
 				if(Input.GetKey(Key.Space))
 				{
 
-					parent.Velocity += parent.Engine.RenderingEngine.Camera.Up;
+					parent.Transformation.Translate(parent.Engine.RenderingEngine.Camera.Up, speed);
 
 				}
 
@@ -99,6 +103,24 @@ namespace STBEngine.Core.Components
 			{
 
 				guiOpened = false;
+
+			}
+
+		}
+
+		public float Speed
+		{
+
+			get
+			{
+
+				return speed;
+
+			}
+			set
+			{
+
+				this.speed = value;
 
 			}
 

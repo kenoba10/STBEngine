@@ -18,7 +18,7 @@ namespace STBEngine.Core.Components
 
 			base.Update();
 
-			projection =  Matrix4.CreateTranslation(-parent.Transformation.Position) * Matrix4.CreateFromQuaternion(parent.Transformation.Rotation) * Matrix4.CreateOrthographic(width, height, zNear, zFar);
+			projection =  Matrix4.CreateTranslation(-parent.Transformation.Position) * Matrix4.CreateFromQuaternion(parent.Transformation.Rotation) * Matrix4.CreateOrthographicOffCenter(0f, width, height, 0f, zNear, zFar);
 
 		}
 
