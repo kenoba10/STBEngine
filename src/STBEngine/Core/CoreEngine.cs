@@ -42,7 +42,7 @@ namespace STBEngine.Core
 			renderingEngine.Initialize();
 			physicsEngine.Initialize();
 
-			game.Initialize();
+			game.Initialize(this);
 
 		}
 

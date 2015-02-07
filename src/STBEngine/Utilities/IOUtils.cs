@@ -10,10 +10,10 @@ namespace STBEngine.Utilities
 	public static class IOUtils
 	{
 
-		public static Stream GetAssemblyStream(string path)
+		public static Stream GetAssemblyStream(object obj, string path)
 		{
 
-			return Assembly.GetExecutingAssembly().GetManifestResourceStream(path);
+			return Assembly.GetAssembly(obj.GetType()).GetManifestResourceStream(path);
 
 		}
 

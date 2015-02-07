@@ -24,6 +24,7 @@ namespace STBEngine.Rendering.Shaders
 			int shader = GL.CreateShader(ShaderType.VertexShader);
 
 			GL.ShaderSource(shader, source);
+			GL.CompileShader(shader);
 
 			int result;
 			GL.GetShader(shader, ShaderParameter.CompileStatus, out result);
