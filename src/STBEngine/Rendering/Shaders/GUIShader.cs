@@ -2,7 +2,6 @@ using System;
 
 using OpenTK;
 
-using STBEngine.Core;
 using STBEngine.Utilities;
 
 namespace STBEngine.Rendering.Shaders

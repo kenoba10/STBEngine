@@ -1,6 +1,5 @@
 ﻿using System;
 
-using OpenTK;
 using OpenTK.Input;
 
 using STBEngine.Core.Event;

@@ -2,18 +2,15 @@
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{63CE62F0-D42F-4C7E-AC1A-919230478570}</ProjectGuid>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8A70C85D-28E3-408A-A035-D9A460B6CBAD}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>STBEngine</RootNamespace>
     <AssemblyName>STBEngine</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <ProductVersion>12.0.0</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
     <ReleaseVersion>1.0.0</ReleaseVersion>
-    <StartupObject>STBEngine.Start</StartupObject>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -21,121 +18,94 @@
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
-    <Commandlineparameters>/home/kenoba10/Documents/Projects/STBEngine/Game/bin/Debug/Game.dll</Commandlineparameters>
-    <ConsolePause>false</ConsolePause>
+    <Commandlineparameters>C:\Users\Kenoba\Documents\Projects\STBEngine\Game\bin\Debug\Game.dll</Commandlineparameters>
+    <Externalconsole>true</Externalconsole>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <DebugType>full</DebugType>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
-    <PlatformTarget>x86</PlatformTarget>
+    <Externalconsole>true</Externalconsole>
+    <Commandlineparameters>C:\Users\Kenoba\Documents\Projects\STBEngine\Game\bin\Release\Game.dll</Commandlineparameters>
   </PropertyGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Folder Include="src\" />
-    <Folder Include="src\STBEngine\" />
-    <Folder Include="src\STBEngine\Core\" />
-    <Folder Include="src\STBEngine\Rendering\" />
-    <Folder Include="src\STBEngine\Physics\" />
-    <Folder Include="src\STBEngine\Core\Event\" />
-    <Folder Include="src\STBEngine\Utilities\" />
-    <Folder Include="src\STBEngine\Core\Components\" />
-    <Folder Include="res\" />
-    <Folder Include="res\shaders\" />
-    <Folder Include="src\STBEngine\Physics\Collision\" />
-    <Folder Include="src\STBEngine\Rendering\Shaders\" />
-    <Folder Include="src\STBEngine\Rendering\Models\" />
-    <Folder Include="res\models\" />
-    <Folder Include="src\STBEngine\Physics\Collision\Colliders\" />
-    <Folder Include="src\STBEngine\Physics\Components\" />
-  </ItemGroup>
-  <ItemGroup>
+    <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="OpenTK">
       <HintPath>lib\OpenTK.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="src\STBEngine\Start.cs" />
     <Compile Include="src\STBEngine\Core\CoreEngine.cs" />
-    <Compile Include="src\STBEngine\Core\Window.cs" />
-    <Compile Include="src\STBEngine\Rendering\RenderingEngine.cs" />
-    <Compile Include="src\STBEngine\Physics\PhysicsEngine.cs" />
-    <Compile Include="src\STBEngine\Core\Input.cs" />
     <Compile Include="src\STBEngine\Core\Entity.cs" />
+    <Compile Include="src\STBEngine\Core\IGame.cs" />
+    <Compile Include="src\STBEngine\Core\Input.cs" />
+    <Compile Include="src\STBEngine\Core\Material.cs" />
+    <Compile Include="src\STBEngine\Core\Sound.cs" />
+    <Compile Include="src\STBEngine\Core\Transformation.cs" />
+    <Compile Include="src\STBEngine\Core\Window.cs" />
+    <Compile Include="src\STBEngine\Core\Components\Attenuation.cs" />
+    <Compile Include="src\STBEngine\Core\Components\BaseLight.cs" />
+    <Compile Include="src\STBEngine\Core\Components\Camera.cs" />
+    <Compile Include="src\STBEngine\Core\Components\CameraOrthographic.cs" />
+    <Compile Include="src\STBEngine\Core\Components\CameraPerspective.cs" />
+    <Compile Include="src\STBEngine\Core\Components\Component.cs" />
+    <Compile Include="src\STBEngine\Core\Components\DirectionalLight.cs" />
+    <Compile Include="src\STBEngine\Core\Components\FreeLook.cs" />
+    <Compile Include="src\STBEngine\Core\Components\FreeMove.cs" />
+    <Compile Include="src\STBEngine\Core\Components\MeshRenderer.cs" />
+    <Compile Include="src\STBEngine\Core\Components\PointLight.cs" />
+    <Compile Include="src\STBEngine\Core\Components\SpotLight.cs" />
     <Compile Include="src\STBEngine\Core\Event\STBEventArgs.cs" />
     <Compile Include="src\STBEngine\Core\Event\STBEventManager.cs" />
-    <Compile Include="src\STBEngine\Core\IGame.cs" />
-    <Compile Include="src\STBEngine\Rendering\Vertex.cs" />
-    <Compile Include="src\STBEngine\Rendering\Index.cs" />
-    <Compile Include="src\STBEngine\Rendering\Mesh.cs" />
-    <Compile Include="src\STBEngine\Utilities\IOUtils.cs" />
-    <Compile Include="src\STBEngine\Core\Transformation.cs" />
-    <Compile Include="src\STBEngine\Core\Components\Component.cs" />
-    <Compile Include="src\STBEngine\Core\Components\Camera.cs" />
-    <Compile Include="src\STBEngine\Core\Components\CameraPerspective.cs" />
-    <Compile Include="src\STBEngine\Core\Components\CameraOrthographic.cs" />
-    <Compile Include="src\STBEngine\Core\Sound.cs" />
-    <Compile Include="src\STBEngine\Rendering\Texture.cs" />
-    <Compile Include="src\STBEngine\Core\Material.cs" />
-    <Compile Include="src\STBEngine\Core\Components\BaseLight.cs" />
-    <Compile Include="src\STBEngine\Core\Components\DirectionalLight.cs" />
-    <Compile Include="src\STBEngine\Core\Components\PointLight.cs" />
-    <Compile Include="src\STBEngine\Core\Components\Attenuation.cs" />
-    <Compile Include="src\STBEngine\Core\Components\SpotLight.cs" />
-    <Compile Include="src\STBEngine\Core\Components\FreeMove.cs" />
-    <Compile Include="src\STBEngine\Core\Components\FreeLook.cs" />
+    <Compile Include="src\STBEngine\Physics\PhysicsEngine.cs" />
+    <Compile Include="src\STBEngine\Physics\Collision\Detection.cs" />
     <Compile Include="src\STBEngine\Physics\Collision\Intersection.cs" />
-    <Compile Include="src\STBEngine\Rendering\Shaders\GUIShader.cs" />
-    <Compile Include="src\STBEngine\Rendering\Shaders\BasicShader.cs" />
-    <Compile Include="src\STBEngine\Rendering\Shaders\DirectionalLightShader.cs" />
-    <Compile Include="src\STBEngine\Rendering\Shaders\PointLightShader.cs" />
-    <Compile Include="src\STBEngine\Rendering\Shaders\SpotLightShader.cs" />
-    <Compile Include="src\STBEngine\Core\Components\MeshRenderer.cs" />
-    <Compile Include="src\STBEngine\Rendering\Shaders\Shader.cs" />
-    <Compile Include="src\STBEngine\Rendering\Models\Model.cs" />
-    <Compile Include="src\STBEngine\Rendering\Models\OBJModel.cs" />
-    <Compile Include="src\STBEngine\Rendering\GUI.cs" />
-    <Compile Include="src\STBEngine\Physics\Collision\Colliders\BoundingSphere.cs" />
-    <Compile Include="src\STBEngine\Physics\Collision\Colliders\Collider.cs" />
+    <Compile Include="src\STBEngine\Physics\Collision\Response.cs" />
     <Compile Include="src\STBEngine\Physics\Collision\Colliders\AxisAlignedBoundingBox.cs" />
     <Compile Include="src\STBEngine\Physics\Collision\Colliders\BoundingPolygon.cs" />
-    <Compile Include="src\STBEngine\Physics\Collision\Detection.cs" />
-    <Compile Include="src\STBEngine\Physics\Collision\Response.cs" />
+    <Compile Include="src\STBEngine\Physics\Collision\Colliders\BoundingSphere.cs" />
+    <Compile Include="src\STBEngine\Physics\Collision\Colliders\Collider.cs" />
     <Compile Include="src\STBEngine\Physics\Components\PhysicsComponent.cs" />
-    <Compile Include="src\STBEngine\Start.cs" />
+    <Compile Include="src\STBEngine\Rendering\GUI.cs" />
+    <Compile Include="src\STBEngine\Rendering\Index.cs" />
+    <Compile Include="src\STBEngine\Rendering\Mesh.cs" />
+    <Compile Include="src\STBEngine\Rendering\RenderingEngine.cs" />
+    <Compile Include="src\STBEngine\Rendering\Texture.cs" />
+    <Compile Include="src\STBEngine\Rendering\Vertex.cs" />
+    <Compile Include="src\STBEngine\Rendering\Models\Model.cs" />
+    <Compile Include="src\STBEngine\Rendering\Models\OBJModel.cs" />
+    <Compile Include="src\STBEngine\Rendering\Shaders\BasicShader.cs" />
+    <Compile Include="src\STBEngine\Rendering\Shaders\DirectionalLightShader.cs" />
+    <Compile Include="src\STBEngine\Rendering\Shaders\GUIShader.cs" />
+    <Compile Include="src\STBEngine\Rendering\Shaders\PointLightShader.cs" />
+    <Compile Include="src\STBEngine\Rendering\Shaders\Shader.cs" />
+    <Compile Include="src\STBEngine\Rendering\Shaders\SpotLightShader.cs" />
+    <Compile Include="src\STBEngine\Utilities\IOUtils.cs" />
   </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <EmbeddedResource Include="res\shaders\basicVS.glsl" />
+    <EmbeddedResource Include="res\models\cube.obj" />
+    <EmbeddedResource Include="res\models\monkey.obj" />
+    <EmbeddedResource Include="res\models\sphere.obj" />
     <EmbeddedResource Include="res\shaders\basicGS.glsl" />
+    <EmbeddedResource Include="res\shaders\basicVS.glsl" />
     <EmbeddedResource Include="res\shaders\guiFS.glsl" />
     <EmbeddedResource Include="res\shaders\guiGS.glsl" />
     <EmbeddedResource Include="res\shaders\guiVS.glsl" />
     <EmbeddedResource Include="res\shaders\lightBasicFS.glsl" />
     <EmbeddedResource Include="res\shaders\lightDirectionalFS.glsl" />
+    <EmbeddedResource Include="res\shaders\lighting.glsl" />
     <EmbeddedResource Include="res\shaders\lightPointFS.glsl" />
     <EmbeddedResource Include="res\shaders\lightSpotFS.glsl" />
-    <EmbeddedResource Include="res\shaders\lighting.glsl" />
-    <EmbeddedResource Include="res\models\monkey.obj" />
-    <EmbeddedResource Include="res\models\cube.obj" />
-    <EmbeddedResource Include="res\models\sphere.obj" />
     <EmbeddedResource Include="res\shaders\utils.glsl" />
   </ItemGroup>
-  <ProjectExtensions>
-    <MonoDevelop>
-      <Properties>
-        <Policies>
-          <DotNetNamingPolicy DirectoryNamespaceAssociation="Hierarchical" ResourceNamePolicy="FileFormatDefault" />
-        </Policies>
-      </Properties>
-    </MonoDevelop>
-  </ProjectExtensions>
   <ItemGroup>
-    <None Include="lib\OpenTK.dll.config">
-      <Link>OpenTK.dll.config</Link>
+    <None Include="lib\libs\x64\openal32.dll">
+      <Link>openal32.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

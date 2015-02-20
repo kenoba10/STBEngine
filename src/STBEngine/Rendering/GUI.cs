@@ -7,7 +7,6 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 
-using STBEngine.Core;
 using STBEngine.Rendering.Shaders;
 
 namespace STBEngine.Rendering

@@ -3,7 +3,6 @@ using System;
 using OpenTK;
 using OpenTK.Audio;
 using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 
 namespace STBEngine.Core

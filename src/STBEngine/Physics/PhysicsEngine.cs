@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 
-using OpenTK;
-
 using STBEngine.Core;
 using STBEngine.Physics.Collision;
 using STBEngine.Physics.Collision.Colliders;
