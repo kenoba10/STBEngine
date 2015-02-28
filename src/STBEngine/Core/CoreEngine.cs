@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 
 using OpenTK;
-using OpenTK.Audio;
 using OpenTK.Audio.OpenAL;
 
 using STBEngine.Core.Event;
@@ -16,6 +15,8 @@ namespace STBEngine.Core
 	{
 
 		private IGame game;
+
+		private Window window;
 
 		private List<Entity> entities;
 
@@ -42,7 +43,7 @@ namespace STBEngine.Core
 			renderingEngine.Initialize();
 			physicsEngine.Initialize();
 
-			game.Initialize(this);
+			game.Initialize();
 
 		}
 
@@ -110,7 +111,7 @@ namespace STBEngine.Core
 
 			this.game = game;
 
-			using(GameWindow window = new Window(game.Title, this))
+			using(GameWindow window = new Window(game.Title, game.AntiAliasing, this))
 			{
 
 				window.Run(ups, fps);
@@ -144,6 +145,24 @@ namespace STBEngine.Core
 			{
 
 				return game;
+
+			}
+
+		}
+
+		public Window Window
+		{
+
+			get
+			{
+
+				return window;
+
+			}
+			set
+			{
+
+				this.window = value;
 
 			}
 

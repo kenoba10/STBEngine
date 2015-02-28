@@ -6,13 +6,20 @@ namespace STBEngine.Core
 	public interface IGame
 	{
 
-		void Initialize(CoreEngine engine);
+		void Initialize();
 
 		void Update();
 
 		void Terminate();
 
 		string Title
+		{
+
+			get;
+
+		}
+
+		int AntiAliasing
 		{
 
 			get;

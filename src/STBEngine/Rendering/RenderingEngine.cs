@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
-using OpenTK.Input;
 
 using STBEngine.Core;
 using STBEngine.Core.Components;
@@ -19,6 +18,8 @@ namespace STBEngine.Rendering
 
 		private Camera camera;
 
+		private int anisotropicFiltering;
+
 		private GUI openGUI;
 
 		private List<GUI> guis;
@@ -33,6 +34,8 @@ namespace STBEngine.Rendering
 			this.engine = engine;
 
 			camera = new Camera();
+
+			anisotropicFiltering = 4;
 
 			guis = new List<GUI>();
 
@@ -66,13 +69,6 @@ namespace STBEngine.Rendering
 			{
 
 				openGUI.Update();
-
-				if(Input.GetKeyDown(Key.Escape))
-				{
-
-					CloseGUI();
-
-				}
 
 			}
 
@@ -332,6 +328,24 @@ namespace STBEngine.Rendering
 			{
 
 				this.camera = value;
+
+			}
+
+		}
+
+		public int AnisotropicFiltering
+		{
+
+			get
+			{
+
+				return anisotropicFiltering;
+
+			}
+			set
+			{
+
+				this.anisotropicFiltering = value;
 
 			}
 

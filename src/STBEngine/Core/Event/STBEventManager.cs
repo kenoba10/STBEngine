@@ -38,6 +38,13 @@ namespace STBEngine.Core.Event
 
 		}
 
+		public void Execute(string _event, string info)
+		{
+
+			Event.Invoke(new STBEventArgs(_event, info));
+
+		}
+
 		private void OnEvent(STBEventArgs e)
 		{
 

@@ -3,6 +3,7 @@ using System.IO;
 
 using OpenTK.Graphics.OpenGL;
 
+using STBEngine.Core;
 using STBEngine.Utilities;
 
 namespace STBEngine.Rendering
@@ -24,7 +25,7 @@ namespace STBEngine.Rendering
 
 		}
 
-		public void LoadTexture(Stream stream)
+		public void LoadTexture(CoreEngine engine, Stream stream)
 		{
 
 			int width;
@@ -40,6 +41,7 @@ namespace STBEngine.Rendering
 			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (float) TextureMagFilter.Linear);
 			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (float) TextureWrapMode.Repeat);
 			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (float) TextureWrapMode.Repeat);
+			GL.TexParameter(TextureTarget.Texture2D, (TextureParameterName) ExtTextureFilterAnisotropic.TextureMaxAnisotropyExt, engine.RenderingEngine.AnisotropicFiltering);
 
 			GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, width, height, 0, PixelFormat.Bgra, PixelType.UnsignedByte, data);
 
@@ -73,7 +75,7 @@ namespace STBEngine.Rendering
 
 		}
 
-		public void LoadTexture(IntPtr data, int width, int height, TextureMinFilter minFilter, TextureMagFilter magFilter, TextureWrapMode wrapMode)
+		public void LoadTexture(CoreEngine engine, IntPtr data, int width, int height, TextureMinFilter minFilter, TextureMagFilter magFilter, TextureWrapMode wrapMode)
 		{
 
 			texture = GL.GenTexture();
@@ -84,6 +86,7 @@ namespace STBEngine.Rendering
 			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (float) magFilter);
 			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (float) wrapMode);
 			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (float) wrapMode);
+			GL.TexParameter(TextureTarget.Texture2D, (TextureParameterName) ExtTextureFilterAnisotropic.TextureMaxAnisotropyExt, engine.RenderingEngine.AnisotropicFiltering);
 
 			GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, width, height, 0, PixelFormat.Bgra, PixelType.UnsignedByte, data);
 

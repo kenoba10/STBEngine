@@ -24,8 +24,8 @@ namespace STBEngine.Physics.Collision.Colliders
 			this.minimumExtent = minimumExtent;
 			this.maximumExtent = maximumExtent;
 
-			minimumExtentTransformed = new Vector3(0f, 0f, 0f);
-			maximumExtentTransformed = new Vector3(0f, 0f, 0f);
+			minimumExtentTransformed = minimumExtent;
+			maximumExtentTransformed = maximumExtent;
 
 		}
 

@@ -1,7 +1,6 @@
 using System;
 
 using OpenTK;
-
 using STBEngine.Utilities;
 
 namespace STBEngine.Rendering.Shaders
@@ -26,7 +25,7 @@ namespace STBEngine.Rendering.Shaders
 		public void UpdateUniforms(GUIObject guiObject)
 		{
 
-			SetUniform("projection", Matrix4.CreateOrthographicOffCenter(0f, 720f, 480f, 0f, -1f, 1f));
+			SetUniform("projection", Matrix4.CreateOrthographicOffCenter(0f, GUI.WIDTH, GUI.HEIGHT, 0f, -1f, 1f));
 
 			SetUniform("useTexture", guiObject.UseTexture ? 1 : 0);
 			SetUniform("baseColor", new Vector4(guiObject.Color.R, guiObject.Color.G, guiObject.Color.B, guiObject.Color.A));

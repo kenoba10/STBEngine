@@ -7,11 +7,18 @@ namespace STBEngine.Core.Event
 	{
 
 		private string _event;
+		private string info;
 
-		public STBEventArgs(string _event) : base()
+		public STBEventArgs(string _event) : this(_event, "")
+		{
+
+		}
+
+		public STBEventArgs(string _event, string info) : base()
 		{
 
 			this._event = _event;
+			this.info = info;
 
 		}
 
@@ -22,6 +29,18 @@ namespace STBEngine.Core.Event
 			{
 
 				return _event;
+
+			}
+
+		}
+
+		public string Info
+		{
+
+			get
+			{
+
+				return info;
 
 			}
 

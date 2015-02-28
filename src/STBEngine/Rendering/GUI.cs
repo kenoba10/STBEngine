@@ -127,6 +127,9 @@ namespace STBEngine.Rendering
 	public abstract class GUI
 	{
 
+		public static readonly float WIDTH = 1920f;
+		public static readonly float HEIGHT = 1080f;
+
 		private List<GUIObject> guiObjects;
 
 		public GUI()
@@ -136,7 +139,7 @@ namespace STBEngine.Rendering
 
 		}
 
-		public void Initialize()
+		public virtual void Initialize()
 		{
 
 			Draw();
@@ -193,7 +196,7 @@ namespace STBEngine.Rendering
 
 		}
 
-		public void Terminate()
+		public virtual void Terminate()
 		{
 
 			foreach(GUIObject guiObject in guiObjects)
@@ -289,7 +292,7 @@ namespace STBEngine.Rendering
 		protected GUIObject DrawString(Vector2 position, string text, Font font, Color color)
 		{
 
-			Bitmap bitmap = new Bitmap(720, 480, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+			Bitmap bitmap = new Bitmap((int) GUI.WIDTH, (int) GUI.HEIGHT, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
 			using(Graphics gfx = Graphics.FromImage(bitmap))
 			{
@@ -305,7 +308,7 @@ namespace STBEngine.Rendering
 			Texture texture = new Texture();
 			texture.LoadTexture(data, bitmap.Width, bitmap.Height);
 
-			return DrawRectangle(new Vector2(0, 0), new Vector2(720, 480), texture);
+			return DrawRectangle(new Vector2(0, 0), new Vector2(GUI.WIDTH, GUI.HEIGHT), texture);
 
 		}
 

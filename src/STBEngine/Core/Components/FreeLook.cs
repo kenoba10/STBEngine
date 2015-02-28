@@ -61,8 +61,8 @@ namespace STBEngine.Core.Components
 
 				Vector2 deltaPosition = Input.GetMousePosition();
 
-				bool rotateX = deltaPosition.Y != 0;
-				bool rotateY = deltaPosition.X != 0;
+				bool rotateX = deltaPosition.Y != 0f;
+				bool rotateY = deltaPosition.X != 0f;
 
 				if(rotateX)
 				{
@@ -103,6 +103,15 @@ namespace STBEngine.Core.Components
 			{
 
 				guiOpened = true;
+
+				if(locked)
+				{
+
+					Input.LockMouse(false);
+
+					locked = false;
+
+				}
 
 			}
 			else if(e.Event == "closeGUI")

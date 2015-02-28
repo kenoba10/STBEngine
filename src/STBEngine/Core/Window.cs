@@ -15,12 +15,14 @@ namespace STBEngine.Core
 
 		private AudioContext AC;
 
-		public Window(string title, CoreEngine engine) : base(1080, 720, new GraphicsMode(32, 24, 0, 4), title, GameWindowFlags.Default, DisplayDevice.Default, 3, 3, GraphicsContextFlags.Default)
+		public Window(string title, int antiAliasing, CoreEngine engine) : base(1080, 720, new GraphicsMode(32, 24, 0, antiAliasing), title, GameWindowFlags.Default, DisplayDevice.Default, 3, 3, GraphicsContextFlags.Default)
 		{
 
 			this.engine = engine;
 
 			AC = new AudioContext();
+
+			engine.Window = this;
 
 		}
 
@@ -84,7 +86,7 @@ namespace STBEngine.Core
 
 			base.OnKeyDown(e);
 
-			engine.EventHandler.Execute("Key" + e.Key.ToString() + "Down");
+			engine.EventHandler.Execute("KeyDown", e.Key.ToString());
 
 		}
 
@@ -93,7 +95,7 @@ namespace STBEngine.Core
 
 			base.OnKeyPress(e);
 
-			engine.EventHandler.Execute("Key" + e.KeyChar + "Press");
+			engine.EventHandler.Execute("KeyPress", e.KeyChar.ToString());
 
 		}
 
@@ -102,7 +104,7 @@ namespace STBEngine.Core
 
 			base.OnKeyUp(e);
 
-			engine.EventHandler.Execute("Key" + e.Key.ToString() + "Up");
+			engine.EventHandler.Execute("KeyUp", e.Key.ToString());
 
 		}
 
@@ -111,7 +113,7 @@ namespace STBEngine.Core
 
 			base.OnMouseDown(e);
 
-			engine.EventHandler.Execute("MouseButton" + e.Button.ToString() + "Down");
+			engine.EventHandler.Execute("MouseButtonDown", e.Button.ToString() + "/" + e.X + "/" + e.Y);
 
 		}
 
@@ -120,7 +122,64 @@ namespace STBEngine.Core
 
 			base.OnMouseUp(e);
 
-			engine.EventHandler.Execute("MouseButton" + e.Button.ToString() + "Up");
+			engine.EventHandler.Execute("MouseButtonUp", e.Button.ToString() + "/" + e.X + "/" + e.Y);
+
+		}
+
+		protected override void OnMouseMove(MouseMoveEventArgs e)
+		{
+
+			base.OnMouseMove(e);
+
+			engine.EventHandler.Execute("MouseMove", e.X + "/" + e.Y + "/" + e.XDelta + "/" + e.YDelta);
+
+		}
+
+		public int AntiAliasing
+		{
+
+			get
+			{
+
+				return Context.GraphicsMode.Samples;
+
+			}
+
+		}
+
+		public WindowState State
+		{
+
+			get
+			{
+
+				return WindowState;
+
+			}
+			set
+			{
+
+				this.WindowState = value;
+
+			}
+
+		}
+
+		public VSyncMode VerticalSync
+		{
+
+			get
+			{
+
+				return VSync;
+
+			}
+			set
+			{
+
+				this.VSync = value;
+
+			}
 
 		}
 

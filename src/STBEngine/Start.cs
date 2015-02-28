@@ -19,12 +19,10 @@ namespace STBEngine
 			foreach(Type type in dll.GetExportedTypes())
 			{
 
-				object game = Activator.CreateInstance(type);
-
-				if(game is IGame)
+				if(typeof(IGame).IsAssignableFrom(type))
 				{
 
-					engine.Run((IGame) game, 20, 60);
+					engine.Run((IGame) Activator.CreateInstance(type, engine), args.Length > 1 ? uint.Parse(args[1]) : 20, args.Length > 2 ? uint.Parse(args[2]) : 60);
 
 					break;
 

@@ -23,7 +23,7 @@ namespace STBEngine.Physics.Collision.Colliders
 			this.center = center;
 			this.radius = radius;
 
-			centerTransformed = new Vector3(0f, 0f, 0f);
+			centerTransformed = center;
 
 		}
 

@@ -5,7 +5,6 @@ using OpenTK;
 
 using STBEngine.Core.Components;
 using STBEngine.Physics.Collision.Colliders;
-using STBEngine.Rendering;
 
 namespace STBEngine.Core
 {
